@@ -1,0 +1,70 @@
+module LivreEnLigne {
+
+    struct InfoRecherche {
+	string fournisseur; 
+	float prix;
+    };
+
+    struct LivreChiffre {
+	string contenu; 
+	string cle;
+    };
+	
+    struct InfoBancaires {
+	unsigned long compte; 
+	unsigned long code;
+    };
+
+
+    exception MiseAJourLivreExeption {
+        string raison;
+    };
+
+    exception NoLivre {
+        string raison;
+    };
+
+    exception EchecCommande {
+        string raison;
+    };
+
+    exception AuthorizationFailed {
+        string raison;
+    };
+
+    exception MoneyTransferRefused {
+        string raison;
+    };
+	
+    interface Lecteur {
+		void miseAjourLivre(in string pAuteur, in string pTitre, in string pFournisseur) raises (MiseAJourLivreExeption);
+		void confirmerTelechargement(in string pAuteur, in string pTitre, in string pFournisseur);
+		void recevoirPret(in string pTitre, in string pAuteur, in string pContenu, in string pCle);
+		void retirerPret(in string pTitre, in string pAuteur);
+    };
+	
+	interface Fournisseur {
+		float rechercherLivre(in string pTitre, in string pAuteur) raises (NoLivre);
+		void commander(in string pTitre, in string pAuteur, in InfoBancaires pInfo, in string pUtilisateur) raises (EchecCommande);
+		LivreChiffre telechargerLivre(in string pUtilisateur, in string pTitre, in string pAuteur);
+		void creerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur);
+		void retirerPret(in string pUtilisateurPreteur,in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur);
+	};
+	
+	interface Mandataire {
+		InfoRecherche rechercherLivre(in string pTitre, in string pAuteur) raises (NoLivre);
+		void enregistrementFournisseur(in string pFournisseur);
+    };
+	
+	interface Controleur {
+		string verifierAutorisation(in string pAuteur, in string pTitre, in string pUtilisateur, in string pFournisseur) raises (AuthorizationFailed);
+		void enregistrerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur, in string pFournisseur);
+		void enregistrerAchat( in string pUtilisateur, in string pTitre, in string pAuteur, in string pFournisseur);
+		void validerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur, in string pFournisseur);
+		void retirerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pFournisseur, in string pTitre, in string pAuteur);
+    };
+
+	interface Banque {
+		void verifierCoordonneesBancaires(in unsigned long pCompte, in  unsigned long pCode) raises (MoneyTransferRefused);
+    };
+};
