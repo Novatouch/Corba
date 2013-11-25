@@ -1,0 +1,50 @@
+# ajout libraires
+
+clic droit projet >> properties
+menu Java Build Path
+onglet Libraries
+bouton add Jar
+
+liste (fichiers dans le dossier lib):
+-openorb-1.3.1.jar
+-openorb_tools-1.3.1.jar
+-avalon-framework.jar
+-logkit.jar
+
+# Ajout d'une configuration pour la compilation de l'idl
+
+clic droit sur le projet >> Run As >> Run configurations
+Nouvelle Java Applications Configuration
+
+Paramètres:
+	Name -> compilation IDL
+	Main Class -> org.openorb.compiler.IdlCompiler
+	coché les deux options include
+	Arguments >> Program Arguments
+	 -> src/LivreEnLigne.idl -verbose -d ./src
+
+# Ajout d'une configuration pour le serveur de nommage
+
+
+clic droit sur le projet >> Run As >> Run configurations
+Nouvelle Java Applications Configuration
+
+
+Paramètres:
+	Name -> serveur de nommage
+	Main Class -> org.openorb.util.MapNamingContext
+
+	Arguments >>
+		 Program Arguments
+	 	-> -ORBPort=2001 -print
+		Vm arguments
+		-> -Dorg.omg.CORBA.ORBClass=org.openorb.CORBA.ORB
+
+# Ajout d'une configuration pour chaque classe 
+
+	Name -> <nom Classe>
+	Main Class -> <package>/<nom classe>
+
+	Arguments >>
+		Vm arguments
+		-> -Dorg.omg.CORBA.ORBClass=org.openorb.CORBA.ORB
