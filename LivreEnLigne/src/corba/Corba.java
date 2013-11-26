@@ -13,9 +13,9 @@ import org.omg.PortableServer.POAPackage.WrongPolicy;
 public class Corba {
 
 	// variable stockant l'arbre orb
-	private static org.omg.CORBA.ORB orb = null;
+	private org.omg.CORBA.ORB orb = null;
 	
-	static org.omg.CosNaming.NamingContext nameRoot = null;
+	private org.omg.CosNaming.NamingContext nameRoot = null;
 	
 	POA rootPOA = null;
 	
@@ -29,7 +29,7 @@ public class Corba {
 	}
 	
 	
-	private static void recupererNameRoot(){
+	private void recupererNameRoot(){
 		 
 		try {
 			nameRoot = org.omg.CosNaming.NamingContextHelper.narrow(orb.resolve_initial_references("NameService"));
