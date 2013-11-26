@@ -1,11 +1,22 @@
 package corba;
 
+import LivreEnLigne.Fournisseur;
+
 public class CorbaLivreEnLigne extends Corba{
 
 	public CorbaLivreEnLigne(String[] pargs) {
 		super(pargs);
 	}
 
+	public Fournisseur resolveObjetFournisseur(String pNom){
+		
+		Fournisseur objetFournisseur = null;
+		// variable pour stocker la réference du serveur CHAT
+		
+		objetFournisseur = (Fournisseur) LivreEnLigne.FournisseurHelper.narrow(resolutionObjetCorba(pNom));
+				
+		return objetFournisseur;
+	}
 	/*
 	public Chat resolveObjetChat(String pNom){
 		

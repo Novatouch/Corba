@@ -25,7 +25,6 @@ public class Corba {
 		recupererNameRoot();
 		resolutionPOA();
 		activationPOA();
-		
 	}
 	
 	
@@ -106,15 +105,16 @@ public class Corba {
 		return  GoogleTalk.TalkHelper.narrow(distantMonTalk);
 	}
 	
-	
-	private static org.omg.CORBA.Object resolutionObjetCorba(String pnomATrouver){
+	*/
+	protected org.omg.CORBA.Object resolutionObjetCorba(String pnomATrouver){
 			
 			// variable pour stocker la réference du serveur CHAT
 			org.omg.CORBA.Object distantObjet = null;
 			
 			// Construction du nom a rechercher
 	        org.omg.CosNaming.NameComponent[] nameToFind = new org.omg.CosNaming.NameComponent[1];
-	         nameToFind[0] = new org.omg.CosNaming.NameComponent(pnomATrouver,"");
+	  
+	        nameToFind[0] = new org.omg.CosNaming.NameComponent(pnomATrouver,"");
 	
 	        // Recherche auprès du naming service
 	        
@@ -129,7 +129,7 @@ public class Corba {
 			return distantObjet;
 			
 	}
-	*/
+	
 	
 	public void run(){
 		orb.run();
