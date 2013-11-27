@@ -1,27 +1,26 @@
 package mandataire;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
 
 import LivreEnLigne.Fournisseur;
 
 public class ListeFournisseur {
 
-	
-	private List<DonneesFournisseur> list = null;
+	private ConcurrentHashMap<String,DonneesFournisseur> list;
+
 	
 	ListeFournisseur(){
-		 list = Collections.synchronizedList(new ArrayList<DonneesFournisseur>());
+		 list = new ConcurrentHashMap<String,DonneesFournisseur>();
 	}
 	
 	public void  ajouterFournisseur(String pNom, Fournisseur pIorFournisseur){
 		
 		DonneesFournisseur maillon = new DonneesFournisseur(pNom, pIorFournisseur);
-		list.add(maillon);
+		list.put(pNom, maillon);
 	}
 	
-	public List<DonneesFournisseur> getList(){
+	public ConcurrentHashMap getList(){
 		return list;
 	}
 	

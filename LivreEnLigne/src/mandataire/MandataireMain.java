@@ -1,5 +1,7 @@
 package mandataire;
 
+import commun.Debug;
+
 import corba.CorbaLivreEnLigne;
 
 public class MandataireMain {
@@ -21,12 +23,15 @@ public class MandataireMain {
 		
 		
 		// création du servant Mandataire
+		Debug.afficherLog("info","création du servant Mandataire");
 		ServantMandataire monMandataire = new ServantMandataire(listeFournisseur);
 		
 		// enregistrement serveur aupèrs du serveur de nommage
+		Debug.afficherLog("info","enregistrement du servant Mandataire auprès du service de nommage");
 		corbaManager.enregistrementServant(nomServeur, monMandataire);
 		
 		// Lancement MandataireCorbaWorker
+		Debug.afficherLog("info","lancement du Thread MandataireCorbaWorker");
 		Thread t1 = new Thread(new MandataireCorbaWorker(corbaManager));
 		t1.start();
 	}

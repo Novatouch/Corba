@@ -4,16 +4,16 @@ import corba.CorbaLivreEnLigne;
 
 public class MandataireCorbaWorker implements Runnable{
 
-	CorbaLivreEnLigne corbaManager = null;
+	private CorbaLivreEnLigne corbaManager = null;
 
-	MandataireCorbaWorker(CorbaLivreEnLigne pCorbaManager){
+	public MandataireCorbaWorker(CorbaLivreEnLigne pCorbaManager){
 		corbaManager = pCorbaManager;
 	}
 	
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		
 		corbaManager.run();
 	}
 

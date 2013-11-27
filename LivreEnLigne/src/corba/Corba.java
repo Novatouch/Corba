@@ -135,6 +135,4 @@ public class Corba {
 		orb.run();
 	}
 	
-
-	
 }

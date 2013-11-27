@@ -7,16 +7,16 @@ public class DonneesFournisseur {
 	String nomFournisseur = null;
 	Fournisseur iorFournisseur = null;
 	
-	DonneesFournisseur(String pNomFournisseur, Fournisseur pIorFournisseur){
+	public DonneesFournisseur(String pNomFournisseur, Fournisseur pIorFournisseur){
 		nomFournisseur = pNomFournisseur;
 		iorFournisseur = pIorFournisseur;
 	}
 
-	String getNomFournisseur(){
+	public synchronized String getNomFournisseur(){
 		return nomFournisseur;
 	}
 	
-	Fournisseur getIorFournisseur(){
+	public synchronized Fournisseur getIorFournisseur(){
 		return iorFournisseur;
 	}
 }
