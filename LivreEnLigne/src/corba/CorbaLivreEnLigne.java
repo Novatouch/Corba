@@ -1,6 +1,7 @@
 package corba;
 
 import LivreEnLigne.Fournisseur;
+import LivreEnLigne.Mandataire;
 
 public class CorbaLivreEnLigne extends Corba{
 
@@ -17,6 +18,17 @@ public class CorbaLivreEnLigne extends Corba{
 				
 		return objetFournisseur;
 	}
+	
+	public Mandataire resolveObjetMandataire(String pNom){
+		
+		Mandataire objetMandataire = null;
+		// variable pour stocker la réference du serveur CHAT
+		
+		objetMandataire = (Mandataire) LivreEnLigne.MandataireHelper.narrow(resolutionObjetCorba(pNom));
+				
+		return objetMandataire;
+	}
+	
 	/*
 	public Chat resolveObjetChat(String pNom){
 		
