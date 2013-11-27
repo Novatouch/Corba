@@ -11,6 +11,6 @@ public interface BanqueOperations
      * Operation verifierCoordonneesBancaires
      */
     public void verifierCoordonneesBancaires(int pCompte, int pCode)
-        throws LivreEnLigne.MoneyTransferRefused;
+        throws LivreEnLigne.ExceptionMoneyTransferRefused;
 
 }

@@ -8,9 +8,14 @@ package LivreEnLigne;
 public final class InfoRecherche implements org.omg.CORBA.portable.IDLEntity
 {
     /**
-     * Struct member fournisseur
+     * Struct member nomFournisseur
      */
-    public String fournisseur;
+    public String nomFournisseur;
+
+    /**
+     * Struct member iorFournisseur
+     */
+    public LivreEnLigne.Fournisseur iorFournisseur;
 
     /**
      * Struct member prix
@@ -25,12 +30,14 @@ public final class InfoRecherche implements org.omg.CORBA.portable.IDLEntity
 
     /**
      * Constructor with fields initialization
-     * @param fournisseur fournisseur struct member
+     * @param nomFournisseur nomFournisseur struct member
+     * @param iorFournisseur iorFournisseur struct member
      * @param prix prix struct member
      */
-    public InfoRecherche(String fournisseur, float prix)
+    public InfoRecherche(String nomFournisseur, LivreEnLigne.Fournisseur iorFournisseur, float prix)
     {
-        this.fournisseur = fournisseur;
+        this.nomFournisseur = nomFournisseur;
+        this.iorFournisseur = iorFournisseur;
         this.prix = prix;
     }
 

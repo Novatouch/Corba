@@ -24,7 +24,7 @@ public class _ControleurStub extends org.omg.CORBA.portable.ObjectImpl
      * Operation verifierAutorisation
      */
     public String verifierAutorisation(String pAuteur, String pTitre, String pUtilisateur, String pFournisseur)
-        throws LivreEnLigne.AuthorizationFailed
+        throws LivreEnLigne.ExceptionAuthorizationFailed
     {
         while(true)
         {
@@ -49,9 +49,9 @@ public class _ControleurStub extends org.omg.CORBA.portable.ObjectImpl
                 catch(org.omg.CORBA.portable.ApplicationException _exception)
                 {
                     String _exception_id = _exception.getId();
-                    if (_exception_id.equals(LivreEnLigne.AuthorizationFailedHelper.id()))
+                    if (_exception_id.equals(LivreEnLigne.ExceptionAuthorizationFailedHelper.id()))
                     {
-                        throw LivreEnLigne.AuthorizationFailedHelper.read(_exception.getInputStream());
+                        throw LivreEnLigne.ExceptionAuthorizationFailedHelper.read(_exception.getInputStream());
                     }
 
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);

@@ -24,7 +24,7 @@ public class _MandataireStub extends org.omg.CORBA.portable.ObjectImpl
      * Operation rechercherLivre
      */
     public LivreEnLigne.InfoRecherche rechercherLivre(String pTitre, String pAuteur)
-        throws LivreEnLigne.NoLivre
+        throws LivreEnLigne.ExceptionNoLivreFound
     {
         while(true)
         {
@@ -47,9 +47,9 @@ public class _MandataireStub extends org.omg.CORBA.portable.ObjectImpl
                 catch(org.omg.CORBA.portable.ApplicationException _exception)
                 {
                     String _exception_id = _exception.getId();
-                    if (_exception_id.equals(LivreEnLigne.NoLivreHelper.id()))
+                    if (_exception_id.equals(LivreEnLigne.ExceptionNoLivreFoundHelper.id()))
                     {
-                        throw LivreEnLigne.NoLivreHelper.read(_exception.getInputStream());
+                        throw LivreEnLigne.ExceptionNoLivreFoundHelper.read(_exception.getInputStream());
                     }
 
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
@@ -80,7 +80,7 @@ public class _MandataireStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation enregistrementFournisseur
      */
-    public void enregistrementFournisseur(String pFournisseur)
+    public void enregistrementFournisseur(String pFournisseur, LivreEnLigne.Fournisseur pIorFournisseur)
     {
         while(true)
         {
@@ -91,6 +91,7 @@ public class _MandataireStub extends org.omg.CORBA.portable.ObjectImpl
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("enregistrementFournisseur",true);
                     _output.write_string(pFournisseur);
+                    LivreEnLigne.FournisseurHelper.write(_output,pIorFournisseur);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -116,7 +117,7 @@ public class _MandataireStub extends org.omg.CORBA.portable.ObjectImpl
                 LivreEnLigne.MandataireOperations _self = (LivreEnLigne.MandataireOperations) _so.servant;
                 try
                 {
-                    _self.enregistrementFournisseur( pFournisseur);
+                    _self.enregistrementFournisseur( pFournisseur,  pIorFournisseur);
                     return;
                 }
                 finally

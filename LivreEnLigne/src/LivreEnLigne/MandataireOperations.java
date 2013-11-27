@@ -11,11 +11,11 @@ public interface MandataireOperations
      * Operation rechercherLivre
      */
     public LivreEnLigne.InfoRecherche rechercherLivre(String pTitre, String pAuteur)
-        throws LivreEnLigne.NoLivre;
+        throws LivreEnLigne.ExceptionNoLivreFound;
 
     /**
      * Operation enregistrementFournisseur
      */
-    public void enregistrementFournisseur(String pFournisseur);
+    public void enregistrementFournisseur(String pFournisseur, LivreEnLigne.Fournisseur pIorFournisseur);
 
 }

@@ -73,14 +73,17 @@ public class InfoRechercheHelper
                     return org.omg.CORBA.ORB.init().create_recursive_tc(id());
                 _working = true;
                 org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init();
-                org.omg.CORBA.StructMember []_members = new org.omg.CORBA.StructMember[2];
+                org.omg.CORBA.StructMember []_members = new org.omg.CORBA.StructMember[3];
 
                 _members[0] = new org.omg.CORBA.StructMember();
-                _members[0].name = "fournisseur";
+                _members[0].name = "nomFournisseur";
                 _members[0].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_string);
                 _members[1] = new org.omg.CORBA.StructMember();
-                _members[1].name = "prix";
-                _members[1].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_float);
+                _members[1].name = "iorFournisseur";
+                _members[1].type = LivreEnLigne.FournisseurHelper.type();
+                _members[2] = new org.omg.CORBA.StructMember();
+                _members[2].name = "prix";
+                _members[2].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_float);
                 _tc = orb.create_struct_tc(id(),"InfoRecherche",_members);
                 _working = false;
             }
@@ -108,7 +111,8 @@ public class InfoRechercheHelper
     {
         LivreEnLigne.InfoRecherche new_one = new LivreEnLigne.InfoRecherche();
 
-        new_one.fournisseur = istream.read_string();
+        new_one.nomFournisseur = istream.read_string();
+        new_one.iorFournisseur = LivreEnLigne.FournisseurHelper.read(istream);
         new_one.prix = istream.read_float();
 
         return new_one;
@@ -121,7 +125,8 @@ public class InfoRechercheHelper
      */
     public static void write(org.omg.CORBA.portable.OutputStream ostream, LivreEnLigne.InfoRecherche value)
     {
-        ostream.write_string(value.fournisseur);
+        ostream.write_string(value.nomFournisseur);
+        LivreEnLigne.FournisseurHelper.write(ostream,value.iorFournisseur);
         ostream.write_float(value.prix);
     }
 

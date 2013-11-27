@@ -11,7 +11,7 @@ public interface ControleurOperations
      * Operation verifierAutorisation
      */
     public String verifierAutorisation(String pAuteur, String pTitre, String pUtilisateur, String pFournisseur)
-        throws LivreEnLigne.AuthorizationFailed;
+        throws LivreEnLigne.ExceptionAuthorizationFailed;
 
     /**
      * Operation enregistrerPret

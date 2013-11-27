@@ -66,7 +66,7 @@ public class MandatairePOATie extends MandatairePOA
      * Operation rechercherLivre
      */
     public LivreEnLigne.InfoRecherche rechercherLivre(String pTitre, String pAuteur)
-        throws LivreEnLigne.NoLivre
+        throws LivreEnLigne.ExceptionNoLivreFound
     {
         return _tie.rechercherLivre( pTitre,  pAuteur);
     }
@@ -74,9 +74,9 @@ public class MandatairePOATie extends MandatairePOA
     /**
      * Operation enregistrementFournisseur
      */
-    public void enregistrementFournisseur(String pFournisseur)
+    public void enregistrementFournisseur(String pFournisseur, LivreEnLigne.Fournisseur pIorFournisseur)
     {
-        _tie.enregistrementFournisseur( pFournisseur);
+        _tie.enregistrementFournisseur( pFournisseur,  pIorFournisseur);
     }
 
 }

@@ -64,10 +64,10 @@ public abstract class FournisseurPOA extends org.omg.PortableServer.Servant
             _output.write_float(_arg_result);
 
         }
-        catch (LivreEnLigne.NoLivre _exception)
+        catch (LivreEnLigne.ExceptionNoLivreFound _exception)
         {
             _output = handler.createExceptionReply();
-            LivreEnLigne.NoLivreHelper.write(_output,_exception);
+            LivreEnLigne.ExceptionNoLivreFoundHelper.write(_output,_exception);
         }
         return _output;
     }
@@ -88,10 +88,10 @@ public abstract class FournisseurPOA extends org.omg.PortableServer.Servant
             _output = handler.createReply();
 
         }
-        catch (LivreEnLigne.EchecCommande _exception)
+        catch (LivreEnLigne.ExceptionEchecCommande _exception)
         {
             _output = handler.createExceptionReply();
-            LivreEnLigne.EchecCommandeHelper.write(_output,_exception);
+            LivreEnLigne.ExceptionEchecCommandeHelper.write(_output,_exception);
         }
         return _output;
     }

@@ -24,7 +24,7 @@ public class _FournisseurStub extends org.omg.CORBA.portable.ObjectImpl
      * Operation rechercherLivre
      */
     public float rechercherLivre(String pTitre, String pAuteur)
-        throws LivreEnLigne.NoLivre
+        throws LivreEnLigne.ExceptionNoLivreFound
     {
         while(true)
         {
@@ -47,9 +47,9 @@ public class _FournisseurStub extends org.omg.CORBA.portable.ObjectImpl
                 catch(org.omg.CORBA.portable.ApplicationException _exception)
                 {
                     String _exception_id = _exception.getId();
-                    if (_exception_id.equals(LivreEnLigne.NoLivreHelper.id()))
+                    if (_exception_id.equals(LivreEnLigne.ExceptionNoLivreFoundHelper.id()))
                     {
-                        throw LivreEnLigne.NoLivreHelper.read(_exception.getInputStream());
+                        throw LivreEnLigne.ExceptionNoLivreFoundHelper.read(_exception.getInputStream());
                     }
 
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
@@ -81,7 +81,7 @@ public class _FournisseurStub extends org.omg.CORBA.portable.ObjectImpl
      * Operation commander
      */
     public void commander(String pTitre, String pAuteur, LivreEnLigne.InfoBancaires pInfo, String pUtilisateur)
-        throws LivreEnLigne.EchecCommande
+        throws LivreEnLigne.ExceptionEchecCommande
     {
         while(true)
         {
@@ -105,9 +105,9 @@ public class _FournisseurStub extends org.omg.CORBA.portable.ObjectImpl
                 catch(org.omg.CORBA.portable.ApplicationException _exception)
                 {
                     String _exception_id = _exception.getId();
-                    if (_exception_id.equals(LivreEnLigne.EchecCommandeHelper.id()))
+                    if (_exception_id.equals(LivreEnLigne.ExceptionEchecCommandeHelper.id()))
                     {
-                        throw LivreEnLigne.EchecCommandeHelper.read(_exception.getInputStream());
+                        throw LivreEnLigne.ExceptionEchecCommandeHelper.read(_exception.getInputStream());
                     }
 
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);

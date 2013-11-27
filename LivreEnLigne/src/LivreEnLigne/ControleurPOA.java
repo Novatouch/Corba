@@ -66,10 +66,10 @@ public abstract class ControleurPOA extends org.omg.PortableServer.Servant
             _output.write_string(_arg_result);
 
         }
-        catch (LivreEnLigne.AuthorizationFailed _exception)
+        catch (LivreEnLigne.ExceptionAuthorizationFailed _exception)
         {
             _output = handler.createExceptionReply();
-            LivreEnLigne.AuthorizationFailedHelper.write(_output,_exception);
+            LivreEnLigne.ExceptionAuthorizationFailedHelper.write(_output,_exception);
         }
         return _output;
     }

@@ -24,7 +24,7 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
      * Operation miseAjourLivre
      */
     public void miseAjourLivre(String pAuteur, String pTitre, String pFournisseur)
-        throws LivreEnLigne.MiseAJourLivreExeption
+        throws LivreEnLigne.ExceptionMiseAJourLivre
     {
         while(true)
         {
@@ -47,9 +47,9 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
                 catch(org.omg.CORBA.portable.ApplicationException _exception)
                 {
                     String _exception_id = _exception.getId();
-                    if (_exception_id.equals(LivreEnLigne.MiseAJourLivreExeptionHelper.id()))
+                    if (_exception_id.equals(LivreEnLigne.ExceptionMiseAJourLivreHelper.id()))
                     {
-                        throw LivreEnLigne.MiseAJourLivreExeptionHelper.read(_exception.getInputStream());
+                        throw LivreEnLigne.ExceptionMiseAJourLivreHelper.read(_exception.getInputStream());
                     }
 
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);

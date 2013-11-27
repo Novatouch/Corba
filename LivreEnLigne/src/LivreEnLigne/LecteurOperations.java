@@ -11,7 +11,7 @@ public interface LecteurOperations
      * Operation miseAjourLivre
      */
     public void miseAjourLivre(String pAuteur, String pTitre, String pFournisseur)
-        throws LivreEnLigne.MiseAJourLivreExeption;
+        throws LivreEnLigne.ExceptionMiseAJourLivre;
 
     /**
      * Operation confirmerTelechargement

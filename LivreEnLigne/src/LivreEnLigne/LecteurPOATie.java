@@ -66,7 +66,7 @@ public class LecteurPOATie extends LecteurPOA
      * Operation miseAjourLivre
      */
     public void miseAjourLivre(String pAuteur, String pTitre, String pFournisseur)
-        throws LivreEnLigne.MiseAJourLivreExeption
+        throws LivreEnLigne.ExceptionMiseAJourLivre
     {
         _tie.miseAjourLivre( pAuteur,  pTitre,  pFournisseur);
     }

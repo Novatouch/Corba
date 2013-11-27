@@ -58,10 +58,10 @@ public abstract class MandatairePOA extends org.omg.PortableServer.Servant
             LivreEnLigne.InfoRechercheHelper.write(_output,_arg_result);
 
         }
-        catch (LivreEnLigne.NoLivre _exception)
+        catch (LivreEnLigne.ExceptionNoLivreFound _exception)
         {
             _output = handler.createExceptionReply();
-            LivreEnLigne.NoLivreHelper.write(_output,_exception);
+            LivreEnLigne.ExceptionNoLivreFoundHelper.write(_output,_exception);
         }
         return _output;
     }
@@ -71,8 +71,9 @@ public abstract class MandatairePOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = _is.read_string();
+        LivreEnLigne.Fournisseur arg1_in = LivreEnLigne.FournisseurHelper.read(_is);
 
-        enregistrementFournisseur(arg0_in);
+        enregistrementFournisseur(arg0_in, arg1_in);
 
         _output = handler.createReply();
 

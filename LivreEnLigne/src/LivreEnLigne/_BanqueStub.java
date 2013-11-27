@@ -24,7 +24,7 @@ public class _BanqueStub extends org.omg.CORBA.portable.ObjectImpl
      * Operation verifierCoordonneesBancaires
      */
     public void verifierCoordonneesBancaires(int pCompte, int pCode)
-        throws LivreEnLigne.MoneyTransferRefused
+        throws LivreEnLigne.ExceptionMoneyTransferRefused
     {
         while(true)
         {
@@ -46,9 +46,9 @@ public class _BanqueStub extends org.omg.CORBA.portable.ObjectImpl
                 catch(org.omg.CORBA.portable.ApplicationException _exception)
                 {
                     String _exception_id = _exception.getId();
-                    if (_exception_id.equals(LivreEnLigne.MoneyTransferRefusedHelper.id()))
+                    if (_exception_id.equals(LivreEnLigne.ExceptionMoneyTransferRefusedHelper.id()))
                     {
-                        throw LivreEnLigne.MoneyTransferRefusedHelper.read(_exception.getInputStream());
+                        throw LivreEnLigne.ExceptionMoneyTransferRefusedHelper.read(_exception.getInputStream());
                     }
 
                     throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);

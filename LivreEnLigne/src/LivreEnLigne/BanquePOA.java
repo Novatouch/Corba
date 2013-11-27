@@ -55,10 +55,10 @@ public abstract class BanquePOA extends org.omg.PortableServer.Servant
             _output = handler.createReply();
 
         }
-        catch (LivreEnLigne.MoneyTransferRefused _exception)
+        catch (LivreEnLigne.ExceptionMoneyTransferRefused _exception)
         {
             _output = handler.createExceptionReply();
-            LivreEnLigne.MoneyTransferRefusedHelper.write(_output,_exception);
+            LivreEnLigne.ExceptionMoneyTransferRefusedHelper.write(_output,_exception);
         }
         return _output;
     }

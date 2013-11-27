@@ -66,7 +66,7 @@ public class BanquePOATie extends BanquePOA
      * Operation verifierCoordonneesBancaires
      */
     public void verifierCoordonneesBancaires(int pCompte, int pCode)
-        throws LivreEnLigne.MoneyTransferRefused
+        throws LivreEnLigne.ExceptionMoneyTransferRefused
     {
         _tie.verifierCoordonneesBancaires( pCompte,  pCode);
     }

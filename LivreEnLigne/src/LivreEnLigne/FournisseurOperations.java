@@ -11,13 +11,13 @@ public interface FournisseurOperations
      * Operation rechercherLivre
      */
     public float rechercherLivre(String pTitre, String pAuteur)
-        throws LivreEnLigne.NoLivre;
+        throws LivreEnLigne.ExceptionNoLivreFound;
 
     /**
      * Operation commander
      */
     public void commander(String pTitre, String pAuteur, LivreEnLigne.InfoBancaires pInfo, String pUtilisateur)
-        throws LivreEnLigne.EchecCommande;
+        throws LivreEnLigne.ExceptionEchecCommande;
 
     /**
      * Operation telechargerLivre

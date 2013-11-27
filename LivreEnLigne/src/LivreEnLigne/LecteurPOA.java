@@ -62,10 +62,10 @@ public abstract class LecteurPOA extends org.omg.PortableServer.Servant
             _output = handler.createReply();
 
         }
-        catch (LivreEnLigne.MiseAJourLivreExeption _exception)
+        catch (LivreEnLigne.ExceptionMiseAJourLivre _exception)
         {
             _output = handler.createExceptionReply();
-            LivreEnLigne.MiseAJourLivreExeptionHelper.write(_output,_exception);
+            LivreEnLigne.ExceptionMiseAJourLivreHelper.write(_output,_exception);
         }
         return _output;
     }

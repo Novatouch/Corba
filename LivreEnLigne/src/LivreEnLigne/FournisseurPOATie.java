@@ -66,7 +66,7 @@ public class FournisseurPOATie extends FournisseurPOA
      * Operation rechercherLivre
      */
     public float rechercherLivre(String pTitre, String pAuteur)
-        throws LivreEnLigne.NoLivre
+        throws LivreEnLigne.ExceptionNoLivreFound
     {
         return _tie.rechercherLivre( pTitre,  pAuteur);
     }
@@ -75,7 +75,7 @@ public class FournisseurPOATie extends FournisseurPOA
      * Operation commander
      */
     public void commander(String pTitre, String pAuteur, LivreEnLigne.InfoBancaires pInfo, String pUtilisateur)
-        throws LivreEnLigne.EchecCommande
+        throws LivreEnLigne.ExceptionEchecCommande
     {
         _tie.commander( pTitre,  pAuteur,  pInfo,  pUtilisateur);
     }
