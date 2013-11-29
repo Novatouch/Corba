@@ -13,6 +13,12 @@ public class Livre {
 		this.titre = pTitre;
 		this.contenu = pContenu;
 	}
+	
+	public Livre(String pAuteur, String pTitre) {
+		
+		this.auteur = pAuteur;
+		this.titre = pTitre;
+	}
 
 	 public synchronized String getAuteur() {
 		return auteur;
