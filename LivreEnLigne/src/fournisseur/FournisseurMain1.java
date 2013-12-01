@@ -16,9 +16,12 @@ public class FournisseurMain1 {
 		
 		String nomServeur = "fournisseur1";
 		String nomMandataire = "mandataire";
+		String nomBanque = "banque";
+		String nomControleur = "controleur";
 		
 		Catalogue catalogue = new Catalogue();
-
+		ListeTelechargement listeTelechargement = new ListeTelechargement();
+		ListeCommande listeCommande = new ListeCommande();
 		
 		Debug.afficherLog("info","créations des livres");
 		
@@ -39,11 +42,9 @@ public class FournisseurMain1 {
 		// objet pour gérer Corba
 		CorbaLivreEnLigne corbaManager = new CorbaLivreEnLigne(args);
 		
-		// enregistrement auprès dun naming service 
-		
 		// création du servant Mandataire
 		Debug.afficherLog("info","création du servant Fournisseur");
-		ServantFournisseur monFournisseur = new ServantFournisseur(nomServeur, corbaManager, catalogue);
+		ServantFournisseur monFournisseur = new ServantFournisseur(nomServeur, corbaManager, catalogue, listeTelechargement, listeCommande, nomBanque, nomControleur);
 		
 		// enregistrement serveur auprès du serveur de nommage
 		Debug.afficherLog("info","enregistrement du servant Fournisseur auprès du service de nommage");

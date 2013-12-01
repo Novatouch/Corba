@@ -34,5 +34,4 @@ public class testBanque {
 			Debug.afficherLog("info","verif NOK");
 		}	
 	}
-
 }

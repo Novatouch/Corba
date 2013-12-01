@@ -1,6 +1,9 @@
 package corba;
 
+import LivreEnLigne.Banque;
+import LivreEnLigne.Controleur;
 import LivreEnLigne.Fournisseur;
+import LivreEnLigne.Lecteur;
 import LivreEnLigne.Mandataire;
 
 public class CorbaLivreEnLigne extends Corba{
@@ -27,6 +30,36 @@ public class CorbaLivreEnLigne extends Corba{
 		objetMandataire = (Mandataire) LivreEnLigne.MandataireHelper.narrow(resolutionObjetCorba(pNom));
 				
 		return objetMandataire;
+	}
+	
+	public Banque resolveObjetBanque(String pNom){
+		
+		Banque objetBanque = null;
+		// variable pour stocker la réference du serveur CHAT
+		
+		objetBanque = (Banque) LivreEnLigne.BanqueHelper.narrow(resolutionObjetCorba(pNom));
+				
+		return objetBanque;
+	}
+	
+	public Controleur resolveObjetControleur(String pNom){
+		
+		Controleur objetControleur = null;
+		// variable pour stocker la réference du serveur CHAT
+		
+		objetControleur = (Controleur) LivreEnLigne.ControleurHelper.narrow(resolutionObjetCorba(pNom));
+				
+		return objetControleur;
+	}
+	
+	public Lecteur resolveObjetLecteur(String pNom){
+		
+		Lecteur objetLecteur = null;
+		// variable pour stocker la réference du serveur CHAT
+		
+		objetLecteur = (Lecteur) LivreEnLigne.LecteurHelper.narrow(resolutionObjetCorba(pNom));
+				
+		return objetLecteur;
 	}
 	
 	/*

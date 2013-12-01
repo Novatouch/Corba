@@ -13,13 +13,13 @@ public class LivreUtilisateur extends Livre {
 	
 	
 	
-	public LivreUtilisateur(String pAuteur, String pTitre, String pNomFournisseur, Fournisseur pIorFournisseur, String pCle) {
+	public LivreUtilisateur(String pAuteur, String pTitre, String pNomFournisseur, Fournisseur pIorFournisseur) {
 		super(pAuteur, pTitre);
 		
 		this.nomFournisseur = nomFournisseur;
 		this.iorFournisseur = iorFournisseur;
-		this.cle = cle;
 	}
+	
 
 	public String getNomFournisseur() {
 		return nomFournisseur;

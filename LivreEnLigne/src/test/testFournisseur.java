@@ -29,6 +29,8 @@ public class testFournisseur {
 			
 			System.out.println("Prix retourné par le fournisseur : " + resultat + "€");
 			
+			// création d'une commande
+			
 			//System.out.println("fournisseur : "+ resultat.nomFournisseur + " Iorfournisseur : " + resultat.iorFournisseur + " prix : " + resultat.prix );
 			
 		} catch (ExceptionNoLivreFound e) {
