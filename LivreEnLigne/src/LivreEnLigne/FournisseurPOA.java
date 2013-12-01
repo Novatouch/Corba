@@ -78,12 +78,14 @@ public abstract class FournisseurPOA extends org.omg.PortableServer.Servant
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = _is.read_string();
         String arg1_in = _is.read_string();
-        LivreEnLigne.InfoBancaires arg2_in = LivreEnLigne.InfoBancairesHelper.read(_is);
+        String arg2_in = _is.read_string();
         String arg3_in = _is.read_string();
+        String arg4_in = _is.read_string();
+        LivreEnLigne.Lecteur arg5_in = LivreEnLigne.LecteurHelper.read(_is);
 
         try
         {
-            commander(arg0_in, arg1_in, arg2_in, arg3_in);
+            commander(arg0_in, arg1_in, arg2_in, arg3_in, arg4_in, arg5_in);
 
             _output = handler.createReply();
 
@@ -101,10 +103,11 @@ public abstract class FournisseurPOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = _is.read_string();
-        String arg1_in = _is.read_string();
+        LivreEnLigne.Lecteur arg1_in = LivreEnLigne.LecteurHelper.read(_is);
         String arg2_in = _is.read_string();
+        String arg3_in = _is.read_string();
 
-        LivreEnLigne.LivreChiffre _arg_result = telechargerLivre(arg0_in, arg1_in, arg2_in);
+        LivreEnLigne.LivreChiffre _arg_result = telechargerLivre(arg0_in, arg1_in, arg2_in, arg3_in);
 
         _output = handler.createReply();
         LivreEnLigne.LivreChiffreHelper.write(_output,_arg_result);

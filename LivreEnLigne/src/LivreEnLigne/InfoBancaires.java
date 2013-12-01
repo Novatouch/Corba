@@ -10,12 +10,12 @@ public final class InfoBancaires implements org.omg.CORBA.portable.IDLEntity
     /**
      * Struct member compte
      */
-    public int compte;
+    public String compte;
 
     /**
      * Struct member code
      */
-    public int code;
+    public String code;
 
     /**
      * Default constructor
@@ -28,7 +28,7 @@ public final class InfoBancaires implements org.omg.CORBA.portable.IDLEntity
      * @param compte compte struct member
      * @param code code struct member
      */
-    public InfoBancaires(int compte, int code)
+    public InfoBancaires(String compte, String code)
     {
         this.compte = compte;
         this.code = code;

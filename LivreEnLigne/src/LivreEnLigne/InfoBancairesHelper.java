@@ -77,10 +77,10 @@ public class InfoBancairesHelper
 
                 _members[0] = new org.omg.CORBA.StructMember();
                 _members[0].name = "compte";
-                _members[0].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_ulong);
+                _members[0].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_string);
                 _members[1] = new org.omg.CORBA.StructMember();
                 _members[1].name = "code";
-                _members[1].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_ulong);
+                _members[1].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_string);
                 _tc = orb.create_struct_tc(id(),"InfoBancaires",_members);
                 _working = false;
             }
@@ -108,8 +108,8 @@ public class InfoBancairesHelper
     {
         LivreEnLigne.InfoBancaires new_one = new LivreEnLigne.InfoBancaires();
 
-        new_one.compte = istream.read_ulong();
-        new_one.code = istream.read_ulong();
+        new_one.compte = istream.read_string();
+        new_one.code = istream.read_string();
 
         return new_one;
     }
@@ -121,8 +121,8 @@ public class InfoBancairesHelper
      */
     public static void write(org.omg.CORBA.portable.OutputStream ostream, LivreEnLigne.InfoBancaires value)
     {
-        ostream.write_ulong(value.compte);
-        ostream.write_ulong(value.code);
+        ostream.write_string(value.compte);
+        ostream.write_string(value.code);
     }
 
 }

@@ -45,8 +45,8 @@ public abstract class BanquePOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
-        int arg0_in = _is.read_ulong();
-        int arg1_in = _is.read_ulong();
+        String arg0_in = _is.read_string();
+        String arg1_in = _is.read_string();
 
         try
         {

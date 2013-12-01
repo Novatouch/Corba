@@ -10,7 +10,7 @@ public interface BanqueOperations
     /**
      * Operation verifierCoordonneesBancaires
      */
-    public void verifierCoordonneesBancaires(int pCompte, int pCode)
+    public void verifierCoordonneesBancaires(String pCompte, String pCode)
         throws LivreEnLigne.ExceptionMoneyTransferRefused;
 
 }

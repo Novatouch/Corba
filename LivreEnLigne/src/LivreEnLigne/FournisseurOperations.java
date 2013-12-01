@@ -16,13 +16,13 @@ public interface FournisseurOperations
     /**
      * Operation commander
      */
-    public void commander(String pTitre, String pAuteur, LivreEnLigne.InfoBancaires pInfo, String pUtilisateur)
+    public void commander(String pTitre, String pAuteur, String pCompte, String pCode, String pLecteur, LivreEnLigne.Lecteur pIorLecteur)
         throws LivreEnLigne.ExceptionEchecCommande;
 
     /**
      * Operation telechargerLivre
      */
-    public LivreEnLigne.LivreChiffre telechargerLivre(String pUtilisateur, String pTitre, String pAuteur);
+    public LivreEnLigne.LivreChiffre telechargerLivre(String pUtilisateur, LivreEnLigne.Lecteur IorUtulisateur, String pTitre, String pAuteur);
 
     /**
      * Operation creerPret

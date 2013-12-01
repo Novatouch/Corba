@@ -23,7 +23,7 @@ public class _BanqueStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation verifierCoordonneesBancaires
      */
-    public void verifierCoordonneesBancaires(int pCompte, int pCode)
+    public void verifierCoordonneesBancaires(String pCompte, String pCode)
         throws LivreEnLigne.ExceptionMoneyTransferRefused
     {
         while(true)
@@ -34,8 +34,8 @@ public class _BanqueStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("verifierCoordonneesBancaires",true);
-                    _output.write_ulong(pCompte);
-                    _output.write_ulong(pCode);
+                    _output.write_string(pCompte);
+                    _output.write_string(pCode);
                     _input = this._invoke(_output);
                     return;
                 }
