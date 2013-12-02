@@ -1,9 +1,15 @@
 package fournisseur;
 
+
+import java.util.Random;
+
+import commun.Debug;
+
 import LivreEnLigne.LivreChiffre;
 
 public class Telechargement {
 
+	private static final short Integer = 0;
 	private CommandeFournisseur commande = null;
 	private LivreChiffre livreChiffre = null;
 	private Boolean aChiffre; 
@@ -71,8 +77,17 @@ public class Telechargement {
 	}
 	
 	private short genererCle(){
-       
-		return (short) Math.floor(Math.random());
+		
+		Random rand = new Random(Short.MAX_VALUE);
+		return (short) rand.nextInt(Short.MAX_VALUE);
+	}
+
+	public LivreChiffre getLivreChiffre() {
+		return livreChiffre;
+	}
+
+	public void setLivreChiffre(LivreChiffre livreChiffre) {
+		this.livreChiffre = livreChiffre;
 	}
 	
 }
