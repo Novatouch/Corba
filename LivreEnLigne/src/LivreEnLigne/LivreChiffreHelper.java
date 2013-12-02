@@ -80,7 +80,7 @@ public class LivreChiffreHelper
                 _members[0].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_string);
                 _members[1] = new org.omg.CORBA.StructMember();
                 _members[1].name = "cle";
-                _members[1].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_string);
+                _members[1].type = orb.get_primitive_tc(org.omg.CORBA.TCKind.tk_short);
                 _tc = orb.create_struct_tc(id(),"LivreChiffre",_members);
                 _working = false;
             }
@@ -109,7 +109,7 @@ public class LivreChiffreHelper
         LivreEnLigne.LivreChiffre new_one = new LivreEnLigne.LivreChiffre();
 
         new_one.contenu = istream.read_string();
-        new_one.cle = istream.read_string();
+        new_one.cle = istream.read_short();
 
         return new_one;
     }
@@ -122,7 +122,7 @@ public class LivreChiffreHelper
     public static void write(org.omg.CORBA.portable.OutputStream ostream, LivreEnLigne.LivreChiffre value)
     {
         ostream.write_string(value.contenu);
-        ostream.write_string(value.cle);
+        ostream.write_short(value.cle);
     }
 
 }

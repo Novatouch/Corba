@@ -66,6 +66,11 @@ public class FournisseurMain1 {
 			Thread t1 = new Thread(new FournisseurCorbaWorker(corbaManager));
 			t1.start();
 			
+			// Lancement thread chiffrement
+			Debug.afficherLog("info","lancement du Thread ChiffrementWorker");
+			Thread t2 = new Thread(new ChiffrementWorker(listeTelechargement, nomServeur, iorFournisseur));
+			t2.start();
+			
 		} catch (InterruptedException e) {
 			
 			Debug.afficherLog("error"," Erreur tragique le thread n'a pu s'endormir");

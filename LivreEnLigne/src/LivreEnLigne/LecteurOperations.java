@@ -10,13 +10,13 @@ public interface LecteurOperations
     /**
      * Operation miseAjourLivre
      */
-    public void miseAjourLivre(String pAuteur, String pTitre, String pFournisseur)
+    public void miseAjourLivre(String pTitre, String pAuteur, String pFournisseur)
         throws LivreEnLigne.ExceptionMiseAJourLivre;
 
     /**
      * Operation confirmerTelechargement
      */
-    public void confirmerTelechargement(String pAuteur, String pTitre, String pFournisseur);
+    public void confirmerTelechargement(String pTitre, String pAuteur, String pFournisseur, LivreEnLigne.Fournisseur pIorFournisseur);
 
     /**
      * Operation recevoirPret

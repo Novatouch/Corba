@@ -2,6 +2,7 @@ package test;
 
 import lecteur.Bibliotheque;
 import lecteur.InterfaceLivreEnLigne;
+import lecteur.LecteurCorbaWorker;
 import lecteur.ServantLecteur;
 import LivreEnLigne.ExceptionEchecCommande;
 import LivreEnLigne.ExceptionNoLivreFound;
@@ -11,6 +12,7 @@ import LivreEnLigne.Lecteur;
 import commun.Debug;
 
 import corba.CorbaLivreEnLigne;
+import fournisseur.FournisseurCorbaWorker;
 
 public class testLecteur {
 
@@ -41,9 +43,13 @@ public class testLecteur {
 		InterfaceLivreEnLigne interfaceLecteur = new InterfaceLivreEnLigne("mandataire", corbaManager, bibliotheque, nomServeur, iorLecteur);
 		
 		
+		// Demarrer corbaWorker
+		Debug.afficherLog("info","Démmarage Corba Worker");
 		
+		Thread t1 = new Thread(new LecteurCorbaWorker(corbaManager));
+		t1.start();
 		
-		Debug.afficherLog("info","test d'une recherche aupèrs du mandataire");
+		Debug.afficherLog("info","test d'une recherche auprès du mandataire");
 		
 		try {
 			InfoRecherche resultat = interfaceLecteur.rechercherLivre("titre1", "auteur1");

@@ -1,20 +1,16 @@
 package lecteur;
 
+import commun.Debug;
+
 import LivreEnLigne.ExceptionMiseAJourLivre;
+import LivreEnLigne.Fournisseur;
 import LivreEnLigne.LecteurPOA;
 
 public class ServantLecteur extends LecteurPOA {
 
 	@Override
-	public void miseAjourLivre(String pAuteur, String pTitre,
+	public void miseAjourLivre( String pTitre, String pAuteur,
 			String pFournisseur) throws ExceptionMiseAJourLivre {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void confirmerTelechargement(String pAuteur, String pTitre,
-			String pFournisseur) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -32,4 +28,10 @@ public class ServantLecteur extends LecteurPOA {
 		
 	}
 
+	@Override
+	public void confirmerTelechargement(String pTitre, String pAuteur,
+			String pFournisseur, Fournisseur pIorFournisseur) {
+		
+			Debug.afficherLog("info","reception Confirmation Telechargement titre :" + pTitre + " auteur :" + pAuteur + " fournisseur : " + pFournisseur);
+	}
 }

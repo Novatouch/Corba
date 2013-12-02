@@ -1,8 +1,11 @@
 package fournisseur;
 
+import LivreEnLigne.LivreChiffre;
+
 public class Telechargement {
 
 	private CommandeFournisseur commande = null;
+	private LivreChiffre livreChiffre = null;
 	private Boolean aChiffre; 
 	private Boolean enCoursDeChiffrement;
 	private Boolean aEnvoyer;
@@ -23,11 +26,11 @@ public class Telechargement {
 		this.aChiffre = aChiffre;
 	}
 
-	public Boolean getEnCoursDeChiffrement() {
+	synchronized public Boolean getEnCoursDeChiffrement() {
 		return enCoursDeChiffrement;
 	}
 
-	public void setEnCoursDeChiffrement(Boolean enCoursDeChiffrement) {
+	synchronized public void setEnCoursDeChiffrement(Boolean enCoursDeChiffrement) {
 		this.enCoursDeChiffrement = enCoursDeChiffrement;
 	}
 
@@ -35,12 +38,41 @@ public class Telechargement {
 		return commande;
 	}
 	
-	public Boolean getaEnvoyer() {
+	synchronized public Boolean getaEnvoyer() {
 		return aEnvoyer;
 	}
 
-	public void setaEnvoyer(Boolean aEnvoyer) {
+	synchronized public void setaEnvoyer(Boolean aEnvoyer) {
 		this.aEnvoyer = aEnvoyer;
+	}
+
+	
+	public void chiffrementContenuLivre() {
+		
+		// génération d'une clé de chiffreme
+		short cle = genererCle();
+		
+		// chiffrer contenu livre
+		String contenuChiffre = chiffrementContenu(commande.getLivre().getContenu(), cle);
+		
+		// enregistrement du resultat livreChiffre
+		livreChiffre = new LivreChiffre (contenuChiffre, cle);
+	}
+	
+	private String chiffrementContenu(String pContenuAChiffrer, short pCle){
+		
+	    String chaineCryptee = "";
+	    for(int i = 0; i < pContenuAChiffrer.length(); i++)
+	    {
+	        chaineCryptee += (char)((int)pContenuAChiffrer.charAt(i) ^ pCle);
+	    }
+	    
+	    return chaineCryptee;
+	}
+	
+	private short genererCle(){
+       
+		return (short) Math.floor(Math.random());
 	}
 	
 }

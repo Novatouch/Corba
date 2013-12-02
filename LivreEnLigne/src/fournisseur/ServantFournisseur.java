@@ -70,24 +70,32 @@ public class ServantFournisseur extends FournisseurPOA {
 	@Override
 	public void commander(String pTitre, String pAuteur, String pCompte, String pCode , String pNomAchetteur, Lecteur pIorAchetteur) throws ExceptionEchecCommande {
 		
+		Debug.afficherLog("info","reception requete commande");
 		// vérifier existence livre dans le catalogue
 		try {
 			
+			Debug.afficherLog("info","recherche du livre dans le catalogue");
 			LivreCatalogue livre = catalogue.rechercherLivre(pAuteur, pTitre);
 			
 			// verifiez coordonnées bancaires
 			try {
+				Debug.afficherLog("info","verification coordonnees bancaires");
+				
 				iorBanque.verifierCoordonneesBancaires(pCompte, pCode);
 				
-				CommandeFournisseur commandeFournisseur = new CommandeFournisseur(pNomAchetteur, pIorAchetteur, livre);
+				Debug.afficherLog("info","enregistrement de la commande sur le fournisseur");
 				
+				CommandeFournisseur commandeFournisseur = new CommandeFournisseur(pNomAchetteur, pIorAchetteur, livre);
 				// ajouter la commande à la liste commande
 				listeCommande.ajouterCommande(commandeFournisseur);
 				
 				// ajouter le livre à la liste des chiffrement
 				Telechargement nouveauTelechargement = new Telechargement(commandeFournisseur);
 				
+				Debug.afficherLog("info","ajout du livre dans la liste des telechargement");
 				listeTelechargement.ajouterTelechargement(nouveauTelechargement);
+				
+				Debug.afficherLog("info","enregistrement de la commande sur le controleur");
 				
 				// ajouteur la commande au controleur
 				iorControleur.enregistrerAchat(pNomAchetteur, pTitre, pAuteur, nomFournisseur);

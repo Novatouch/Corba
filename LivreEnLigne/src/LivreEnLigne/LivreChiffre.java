@@ -15,7 +15,7 @@ public final class LivreChiffre implements org.omg.CORBA.portable.IDLEntity
     /**
      * Struct member cle
      */
-    public String cle;
+    public short cle;
 
     /**
      * Default constructor
@@ -28,7 +28,7 @@ public final class LivreChiffre implements org.omg.CORBA.portable.IDLEntity
      * @param contenu contenu struct member
      * @param cle cle struct member
      */
-    public LivreChiffre(String contenu, String cle)
+    public LivreChiffre(String contenu, short cle)
     {
         this.contenu = contenu;
         this.cle = cle;

@@ -4,7 +4,7 @@ module LivreEnLigne {
 
     struct LivreChiffre {
 	string contenu; 
-	string cle;
+	short cle;
     };
 	
     struct InfoBancaires {
@@ -33,9 +33,12 @@ module LivreEnLigne {
         string raison;
     };
 	
+    interface Fournisseur;
+
+
     interface Lecteur {
-        void miseAjourLivre(in string pAuteur, in string pTitre, in string pFournisseur) raises (ExceptionMiseAJourLivre);
-        void confirmerTelechargement(in string pAuteur, in string pTitre, in string pFournisseur);
+        void miseAjourLivre( in string pTitre, in string pAuteur, in string pFournisseur) raises (ExceptionMiseAJourLivre);
+        void confirmerTelechargement( in string pTitre, in string pAuteur, in string pFournisseur, in Fournisseur pIorFournisseur);
         void recevoirPret(in string pTitre, in string pAuteur, in string pContenu, in string pCle);
         void retirerPret(in string pTitre, in string pAuteur);
     };

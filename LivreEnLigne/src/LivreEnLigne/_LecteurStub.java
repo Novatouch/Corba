@@ -23,7 +23,7 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation miseAjourLivre
      */
-    public void miseAjourLivre(String pAuteur, String pTitre, String pFournisseur)
+    public void miseAjourLivre(String pTitre, String pAuteur, String pFournisseur)
         throws LivreEnLigne.ExceptionMiseAJourLivre
     {
         while(true)
@@ -34,8 +34,8 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("miseAjourLivre",true);
-                    _output.write_string(pAuteur);
                     _output.write_string(pTitre);
+                    _output.write_string(pAuteur);
                     _output.write_string(pFournisseur);
                     _input = this._invoke(_output);
                     return;
@@ -67,7 +67,7 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
                 LivreEnLigne.LecteurOperations _self = (LivreEnLigne.LecteurOperations) _so.servant;
                 try
                 {
-                    _self.miseAjourLivre( pAuteur,  pTitre,  pFournisseur);
+                    _self.miseAjourLivre( pTitre,  pAuteur,  pFournisseur);
                     return;
                 }
                 finally
@@ -81,7 +81,7 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation confirmerTelechargement
      */
-    public void confirmerTelechargement(String pAuteur, String pTitre, String pFournisseur)
+    public void confirmerTelechargement(String pTitre, String pAuteur, String pFournisseur, LivreEnLigne.Fournisseur pIorFournisseur)
     {
         while(true)
         {
@@ -91,9 +91,10 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("confirmerTelechargement",true);
-                    _output.write_string(pAuteur);
                     _output.write_string(pTitre);
+                    _output.write_string(pAuteur);
                     _output.write_string(pFournisseur);
+                    LivreEnLigne.FournisseurHelper.write(_output,pIorFournisseur);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -119,7 +120,7 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
                 LivreEnLigne.LecteurOperations _self = (LivreEnLigne.LecteurOperations) _so.servant;
                 try
                 {
-                    _self.confirmerTelechargement( pAuteur,  pTitre,  pFournisseur);
+                    _self.confirmerTelechargement( pTitre,  pAuteur,  pFournisseur,  pIorFournisseur);
                     return;
                 }
                 finally
