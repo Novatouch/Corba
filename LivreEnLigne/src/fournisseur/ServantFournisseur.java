@@ -112,10 +112,18 @@ public class ServantFournisseur extends FournisseurPOA {
 	}
 
 	@Override
-	public LivreChiffre telechargerLivre(String pUtilisateur, Lecteur IorUtulisateur, String pTitre, String pAuteur) {
-		// TODO Auto-generated method stub
-		return null;
+	public LivreChiffre telechargerLivre(String pTitre, String pAuteur, String pUtilisateur){
+		
+		// recupération de l'objet téléchargement lié à cet utilisateur et à sa commande
+		Telechargement objetTelechargement = listeTelechargement.rechercherTelechargement(pTitre + pAuteur + pUtilisateur);
+		
+		// mise à jour de l'objet
+		objetTelechargement.setaEnvoyer(false);
+		
+		// suppression de l'objet de la liste
+		listeTelechargement.supprimerTelechargement(objetTelechargement);
+		
+		// envoie du contenu chiffré au client, ainsi que la clée
+		return objetTelechargement.getLivreChiffre();
 	}
-
-
 }

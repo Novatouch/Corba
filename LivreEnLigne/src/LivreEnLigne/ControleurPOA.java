@@ -60,10 +60,9 @@ public abstract class ControleurPOA extends org.omg.PortableServer.Servant
 
         try
         {
-            String _arg_result = verifierAutorisation(arg0_in, arg1_in, arg2_in, arg3_in);
+            verifierAutorisation(arg0_in, arg1_in, arg2_in, arg3_in);
 
             _output = handler.createReply();
-            _output.write_string(_arg_result);
 
         }
         catch (LivreEnLigne.ExceptionAuthorizationFailed _exception)

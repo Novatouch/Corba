@@ -1,7 +1,5 @@
 module LivreEnLigne {
 
-
-
     struct LivreChiffre {
 	string contenu; 
 	short cle;
@@ -46,7 +44,7 @@ module LivreEnLigne {
     interface Fournisseur {
         float rechercherLivre(in string pTitre, in string pAuteur) raises (ExceptionNoLivreFound);
         void commander(in string pTitre, in string pAuteur, in string pCompte, in string pCode, in string pLecteur, in Lecteur pIorLecteur) raises (ExceptionEchecCommande);
-        LivreChiffre telechargerLivre(in string pUtilisateur, in Lecteur IorUtulisateur, in string pTitre, in string pAuteur);
+        LivreChiffre telechargerLivre(in string pTitre, in string pAuteur, in string pUtilisateur);
         void creerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur);
         void retirerPret(in string pUtilisateurPreteur,in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur);
     };
@@ -64,7 +62,7 @@ module LivreEnLigne {
     };
 	
     interface Controleur {
-        string verifierAutorisation(in string pAuteur, in string pTitre, in string pUtilisateur, in string pFournisseur) raises (ExceptionAuthorizationFailed);
+        void verifierAutorisation(in string pTitre, in string pAuteur, in string pUtilisateur, in string pFournisseur) raises (ExceptionAuthorizationFailed);
         void enregistrerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur, in string pFournisseur);
         void enregistrerAchat( in string pUtilisateur, in string pTitre, in string pAuteur, in string pFournisseur);
         void validerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur, in string pFournisseur);

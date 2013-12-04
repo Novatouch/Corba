@@ -1,9 +1,10 @@
 package lecteur;
 
+import LivreEnLigne.Controleur;
+import LivreEnLigne.ExceptionAuthorizationFailed;
 import LivreEnLigne.ExceptionEchecCommande;
 import LivreEnLigne.ExceptionNoLivreFound;
 import LivreEnLigne.Fournisseur;
-import LivreEnLigne.InfoBancaires;
 import LivreEnLigne.InfoRecherche;
 import LivreEnLigne.Lecteur;
 import LivreEnLigne.Mandataire;
@@ -18,17 +19,18 @@ public class InterfaceLivreEnLigne {
 	CorbaLivreEnLigne corbaManager;
 	String nomLecteur;
 	Lecteur iorLecteur;
+	Controleur iorControleur;
 	Bibliotheque bibliotheque;
 	
-	public InterfaceLivreEnLigne(String pMandataire, CorbaLivreEnLigne pCorbaManager, Bibliotheque pBibliotheque, String pLecteur, Lecteur pIorLecteur){
+	public InterfaceLivreEnLigne(String pMandataire, CorbaLivreEnLigne pCorbaManager, Bibliotheque pBibliotheque, String pLecteur, Lecteur pIorLecteur, String pNomControleur){
 		
 		corbaManager = pCorbaManager;
 		// resolution iorMandataire
 		Debug.afficherLog("info","Résolution du Mandataire auprès du serveur de nommage");
 		iorMandataire = corbaManager.resolveObjetMandataire(pMandataire);
+		iorControleur = corbaManager.resolveObjetControleur(pNomControleur);
 		iorLecteur = pIorLecteur;
 		bibliotheque = pBibliotheque;
-		
 	}
 	
 	public InfoRecherche rechercherLivre(String pTitre, String pAuteur) throws ExceptionNoLivreFound{
@@ -46,5 +48,20 @@ public class InterfaceLivreEnLigne {
 		bibliotheque.ajouterLivre(nouveauLivre);
 	}
 	
-	// commander(pTitre: String, pAuteur: String, pFournisseur: Fournisseur)
+	public String LireLivre(LivreUtilisateur pLivre) throws ExceptionAuthorizationFailed, ExceptionLivreNotTelecharge{
+		
+		if(pLivre.getEstTelecharger() == false){
+			throw new ExceptionLivreNotTelecharge();
+		}
+		
+		if(pLivre.getLectureAutorisee() != true){
+			
+			// demande autorisation auprès controleur
+			iorControleur.verifierAutorisation(pLivre.getTitre(), pLivre.getAuteur(), nomLecteur, pLivre.getNomFournisseur());
+			
+			pLivre.setLectureAutorisee(true);
+		}
+		
+		return pLivre.dechiffrementLivre();
+	}
 }

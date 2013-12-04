@@ -31,6 +31,10 @@ public class ListeTelechargement {
     	liste.remove(titre + auteur + utilisateur);
     }
     
+    public Telechargement rechercherTelechargement(String pkey){
+    	
+    	return liste.get(pkey);
+    }
     public Telechargement rechercheLivreAChiffrer() throws ExceptionNoLivreToEncrypt {
 		
     	  Collection<Telechargement> listeTelechargement = liste.values();
@@ -49,4 +53,6 @@ public class ListeTelechargement {
           
           throw new ExceptionNoLivreToEncrypt();
     }
+    
+    
 }

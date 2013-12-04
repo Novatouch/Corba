@@ -103,11 +103,10 @@ public abstract class FournisseurPOA extends org.omg.PortableServer.Servant
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = _is.read_string();
-        LivreEnLigne.Lecteur arg1_in = LivreEnLigne.LecteurHelper.read(_is);
+        String arg1_in = _is.read_string();
         String arg2_in = _is.read_string();
-        String arg3_in = _is.read_string();
 
-        LivreEnLigne.LivreChiffre _arg_result = telechargerLivre(arg0_in, arg1_in, arg2_in, arg3_in);
+        LivreEnLigne.LivreChiffre _arg_result = telechargerLivre(arg0_in, arg1_in, arg2_in);
 
         _output = handler.createReply();
         LivreEnLigne.LivreChiffreHelper.write(_output,_arg_result);

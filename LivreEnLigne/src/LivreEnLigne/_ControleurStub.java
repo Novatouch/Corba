@@ -23,7 +23,7 @@ public class _ControleurStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation verifierAutorisation
      */
-    public String verifierAutorisation(String pAuteur, String pTitre, String pUtilisateur, String pFournisseur)
+    public void verifierAutorisation(String pTitre, String pAuteur, String pUtilisateur, String pFournisseur)
         throws LivreEnLigne.ExceptionAuthorizationFailed
     {
         while(true)
@@ -34,13 +34,12 @@ public class _ControleurStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     org.omg.CORBA.portable.OutputStream _output = this._request("verifierAutorisation",true);
-                    _output.write_string(pAuteur);
                     _output.write_string(pTitre);
+                    _output.write_string(pAuteur);
                     _output.write_string(pUtilisateur);
                     _output.write_string(pFournisseur);
                     _input = this._invoke(_output);
-                    String _arg_ret = _input.read_string();
-                    return _arg_ret;
+                    return;
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
                 {
@@ -69,7 +68,8 @@ public class _ControleurStub extends org.omg.CORBA.portable.ObjectImpl
                 LivreEnLigne.ControleurOperations _self = (LivreEnLigne.ControleurOperations) _so.servant;
                 try
                 {
-                    return _self.verifierAutorisation( pAuteur,  pTitre,  pUtilisateur,  pFournisseur);
+                    _self.verifierAutorisation( pTitre,  pAuteur,  pUtilisateur,  pFournisseur);
+                    return;
                 }
                 finally
                 {

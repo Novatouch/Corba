@@ -22,7 +22,7 @@ public interface FournisseurOperations
     /**
      * Operation telechargerLivre
      */
-    public LivreEnLigne.LivreChiffre telechargerLivre(String pUtilisateur, LivreEnLigne.Lecteur IorUtulisateur, String pTitre, String pAuteur);
+    public LivreEnLigne.LivreChiffre telechargerLivre(String pTitre, String pAuteur, String pUtilisateur);
 
     /**
      * Operation creerPret

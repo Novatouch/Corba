@@ -89,5 +89,4 @@ public class Telechargement {
 	public void setLivreChiffre(LivreChiffre livreChiffre) {
 		this.livreChiffre = livreChiffre;
 	}
-	
 }

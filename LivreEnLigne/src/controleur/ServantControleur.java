@@ -13,13 +13,7 @@ public class ServantControleur extends ControleurPOA {
 		liste = pListe;
 	}
 	
-	@Override
-	public String verifierAutorisation(String pAuteur, String pTitre,
-			String pUtilisateur, String pFournisseur)
-			throws ExceptionAuthorizationFailed {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public void enregistrerPret(String pUtilisateurPreteur,
@@ -58,5 +52,21 @@ public class ServantControleur extends ControleurPOA {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+	@Override
+	public void verifierAutorisation(String pTitre, String pAuteur,
+			String pNomAchetteur, String pNomFournisseur)
+			throws ExceptionAuthorizationFailed {
+		try {
+			liste.verifierExistenceEnregistrement(pTitre, pAuteur, pNomFournisseur, pNomAchetteur);
+		} catch (ExceptionEnregistrementNotFound e) {
+
+			throw new ExceptionAuthorizationFailed();
+		}
+		
+	}
+
 
 }

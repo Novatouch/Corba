@@ -65,10 +65,10 @@ public class ControleurPOATie extends ControleurPOA
     /**
      * Operation verifierAutorisation
      */
-    public String verifierAutorisation(String pAuteur, String pTitre, String pUtilisateur, String pFournisseur)
+    public void verifierAutorisation(String pTitre, String pAuteur, String pUtilisateur, String pFournisseur)
         throws LivreEnLigne.ExceptionAuthorizationFailed
     {
-        return _tie.verifierAutorisation( pAuteur,  pTitre,  pUtilisateur,  pFournisseur);
+        _tie.verifierAutorisation( pTitre,  pAuteur,  pUtilisateur,  pFournisseur);
     }
 
     /**

@@ -23,4 +23,12 @@ public class ListeEnregistrement {
     	
     	liste.put(titre + auteur + fournisseur + achetteur, pCommande);
     }
+    
+    public void verifierExistenceEnregistrement(String pTitre, String pAuteur, String pNomFournisseur, 
+    		String pNomAchetteur) throws ExceptionEnregistrementNotFound {
+    	
+    	if( liste.containsKey(pTitre + pAuteur + pNomFournisseur + pNomAchetteur) == false){
+    		throw new ExceptionEnregistrementNotFound();
+    	}
+    }
 }

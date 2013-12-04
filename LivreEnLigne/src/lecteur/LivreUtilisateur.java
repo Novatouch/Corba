@@ -8,18 +8,27 @@ public class LivreUtilisateur extends Livre {
 
 	private String nomFournisseur = null;
 	private Fournisseur iorFournisseur = null;
-	private String cle = null;
-	private Boolean estTelecharger = false;
-	
-	
+	private short cle;
+	private Boolean estTelecharger;
+	private Boolean lectureAutorisee;
 	
 	public LivreUtilisateur(String pAuteur, String pTitre, String pNomFournisseur, Fournisseur pIorFournisseur) {
 		super(pAuteur, pTitre);
-		
+		estTelecharger = false;
+		lectureAutorisee = false;
 		this.nomFournisseur = nomFournisseur;
 		this.iorFournisseur = iorFournisseur;
 	}
 	
+	
+	public Boolean getLectureAutorisee() {
+		return lectureAutorisee;
+	}
+
+
+	public void setLectureAutorisee(Boolean lectureAutorisee) {
+		this.lectureAutorisee = lectureAutorisee;
+	}
 
 	public String getNomFournisseur() {
 		return nomFournisseur;
@@ -45,14 +54,14 @@ public class LivreUtilisateur extends Livre {
 
 
 
-	public String getCle() {
+	public short getCle() {
 		return cle;
 	}
 
 
 
-	public void setCle(String cle) {
-		this.cle = cle;
+	public void setCle(short cle2) {
+		this.cle = cle2;
 	}
 
 
@@ -69,8 +78,16 @@ public class LivreUtilisateur extends Livre {
 
 
 
-	public String dechiffrement(){
+	public String dechiffrementLivre(){
 		
-		return null;
+		String chaineDechiffree = "";
+	    for(int i = 0; i < this.contenu.length(); i++)
+	    {
+	    	chaineDechiffree += (char)((int)this.contenu.charAt(i) ^ cle);
+	    }
+	    
+	    return chaineDechiffree;
 	}
+	
+
 }

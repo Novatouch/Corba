@@ -1,9 +1,15 @@
 package test;
 
+import java.util.Scanner;
+
 import lecteur.Bibliotheque;
+import lecteur.ExceptionLivreNotTelecharge;
+import lecteur.ExceptionNoLivreInBibliotheque;
 import lecteur.InterfaceLivreEnLigne;
 import lecteur.LecteurCorbaWorker;
+import lecteur.LivreUtilisateur;
 import lecteur.ServantLecteur;
+import LivreEnLigne.ExceptionAuthorizationFailed;
 import LivreEnLigne.ExceptionEchecCommande;
 import LivreEnLigne.ExceptionNoLivreFound;
 import LivreEnLigne.InfoRecherche;
@@ -21,56 +27,99 @@ public class testLecteur {
 	 */
 	public static void main(String[] args) {
 		
-		String nomServeur = "lecteur1";
+		String nomLecteur = "lecteur1";
 		
-		Debug.afficherLog("info","Lancement testLecteur");
+		Debug.afficherLog("info","testLecteur :  Lancement testLecteur");
 		CorbaLivreEnLigne corbaManager = new CorbaLivreEnLigne(args);
 		
 		Bibliotheque bibliotheque = new Bibliotheque();
 		
-		Debug.afficherLog("info","création InterfaceLivreEnLigne");
+		Debug.afficherLog("info","testLecteur : création InterfaceLivreEnLigne");
 		
 		// création servant Lecteur 
-		ServantLecteur monLecteur = new ServantLecteur();
+		ServantLecteur monLecteur = new ServantLecteur(nomLecteur, bibliotheque);
 		
 		// Déclaration servant Lecteur
 
-		Debug.afficherLog("info","Enregistrement du servant auprès du naming service");
-		corbaManager.enregistrementServant(nomServeur, monLecteur);
+		Debug.afficherLog("info","testLecteur : Enregistrement du servant auprès du naming service");
+		corbaManager.enregistrementServant(nomLecteur, monLecteur);
 		
-		Lecteur iorLecteur = corbaManager.resolveObjetLecteur(nomServeur);
+		try {
+			Thread.sleep(1);
+		} catch (InterruptedException e1) {
+			Debug.afficherLog("error","testLecteur : Arret thread principal impossible");
+		}
 		
-		InterfaceLivreEnLigne interfaceLecteur = new InterfaceLivreEnLigne("mandataire", corbaManager, bibliotheque, nomServeur, iorLecteur);
+		Lecteur iorLecteur = corbaManager.resolveObjetLecteur(nomLecteur);
 		
+		InterfaceLivreEnLigne interfaceLecteur = new InterfaceLivreEnLigne("mandataire", corbaManager, bibliotheque, nomLecteur, iorLecteur, "controleur");
 		
 		// Demarrer corbaWorker
-		Debug.afficherLog("info","Démmarage Corba Worker");
+		Debug.afficherLog("info","testLecteur : Démmarage Corba Worker");
 		
 		Thread t1 = new Thread(new LecteurCorbaWorker(corbaManager));
 		t1.start();
 		
-		Debug.afficherLog("info","test d'une recherche auprès du mandataire");
+		Debug.afficherLog("info","testLecteur :  test d'une recherche auprès du mandataire");
 		
+		
+		InfoRecherche resultat;
 		try {
-			InfoRecherche resultat = interfaceLecteur.rechercherLivre("titre1", "auteur1");
+			resultat = interfaceLecteur.rechercherLivre("titre1", "auteur1");
+			
 			System.out.println("fournisseur : "+ resultat.nomFournisseur + " prix : " + resultat.prix );
 			
-			Debug.afficherLog("info","test d'une commande auprès du Fournisseur");
+			
+			
 			
 			try {
-				resultat.iorFournisseur.commander("titre1", "auteur1", "bla", "bla", nomServeur, iorLecteur);
+				Debug.afficherLog("info","testLecteur :  test d'une commande auprès du Fournisseur");
 				
-				Debug.afficherLog("info","commande réussie");
+				resultat.iorFournisseur.commander("titre1", "auteur1", "bla", "bla", nomLecteur, iorLecteur);
+				
+				Debug.afficherLog("info","testLecteur :  commande reussie");
+				
+				Scanner sc = new Scanner(System.in);
+				System.out.println("Veuillez saisir un mot :");
+				String str = sc.nextLine();
+				
+				
+				try {
+					LivreUtilisateur livre;
+					
+					Debug.afficherLog("info","testLecteur :  tentative de lecture du livre");
+					livre = bibliotheque.rechercherLivre("titre1", "auteur1", "fournisseur1");
+					
+					String contenu;
+					try {
+						contenu = interfaceLecteur.LireLivre(livre);
+						
+						Debug.afficherLog("info","Lecture autorisee");
+						
+						System.out.println("contenu livre : " + contenu);
+						
+						
+					} catch (ExceptionAuthorizationFailed e) {
+						
+						Debug.afficherLog("info","testLecteur :  le controleur vous a refusé l'accès au livre");
+					} catch (ExceptionLivreNotTelecharge e) {
+						
+						Debug.afficherLog("info","testLecteur :  Le livre n'a pas encore été téléchargé auprès du fournisseur");
+					}
+					
+				} catch (ExceptionNoLivreInBibliotheque e) {
+					Debug.afficherLog("info","testLecteur :  livre introuvable dans la biliotheque");
+				}
+			
 			} catch (ExceptionEchecCommande e) {
 				
-				Debug.afficherLog("info","commande échouée");
+				Debug.afficherLog("info","testLecteur :  commande auprès du Fournisseur echouée");
 			}
 			
 		} catch (ExceptionNoLivreFound e) {
 			
-			System.out.println("la recherche n'a retournée aucun livre");
+			Debug.afficherLog("info","testLecteur : le mandataire n'a retourné aucun résultat");
+			
 		}
-		
 	}
-
 }

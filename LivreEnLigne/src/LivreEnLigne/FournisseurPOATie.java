@@ -83,9 +83,9 @@ public class FournisseurPOATie extends FournisseurPOA
     /**
      * Operation telechargerLivre
      */
-    public LivreEnLigne.LivreChiffre telechargerLivre(String pUtilisateur, LivreEnLigne.Lecteur IorUtulisateur, String pTitre, String pAuteur)
+    public LivreEnLigne.LivreChiffre telechargerLivre(String pTitre, String pAuteur, String pUtilisateur)
     {
-        return _tie.telechargerLivre( pUtilisateur,  IorUtulisateur,  pTitre,  pAuteur);
+        return _tie.telechargerLivre( pTitre,  pAuteur,  pUtilisateur);
     }
 
     /**

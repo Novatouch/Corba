@@ -15,7 +15,5 @@ public class Debug {
         	System.out.println("Code inconnu !!!");
         	break;
 		}
-		
-		
 	}
 }
