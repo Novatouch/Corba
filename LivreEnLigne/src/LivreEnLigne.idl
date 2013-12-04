@@ -33,7 +33,6 @@ module LivreEnLigne {
 	
     interface Fournisseur;
 
-
     interface Lecteur {
         void miseAjourLivre( in string pTitre, in string pAuteur, in string pFournisseur) raises (ExceptionMiseAJourLivre);
         void confirmerTelechargement( in string pTitre, in string pAuteur, in string pFournisseur, in Fournisseur pIorFournisseur);
@@ -47,8 +46,8 @@ module LivreEnLigne {
         LivreChiffre telechargerLivre(in string pTitre, in string pAuteur, in string pUtilisateur);
         void creerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur);
         void retirerPret(in string pUtilisateurPreteur,in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur);
+	void flush();
     };
-	
 
     struct InfoRecherche {
 	string nomFournisseur;
@@ -59,14 +58,16 @@ module LivreEnLigne {
     interface Mandataire {
         InfoRecherche rechercherLivre(in string pTitre, in string pAuteur) raises (ExceptionNoLivreFound);
         void enregistrementFournisseur(in string pFournisseur,in Fournisseur pIorFournisseur);
+	void flush();
     };
-	
+
     interface Controleur {
         void verifierAutorisation(in string pTitre, in string pAuteur, in string pUtilisateur, in string pFournisseur) raises (ExceptionAuthorizationFailed);
         void enregistrerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur, in string pFournisseur);
         void enregistrerAchat( in string pUtilisateur, in string pTitre, in string pAuteur, in string pFournisseur);
         void validerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur, in string pFournisseur);
         void retirerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pFournisseur, in string pTitre, in string pAuteur);
+	void flush();
     };
 
     interface Banque {

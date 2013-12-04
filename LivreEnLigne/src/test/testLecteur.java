@@ -37,12 +37,12 @@ public class testLecteur {
 		Debug.afficherLog("info","testLecteur : création InterfaceLivreEnLigne");
 		
 		// création servant Lecteur 
-		ServantLecteur monLecteur = new ServantLecteur(nomLecteur, bibliotheque);
+		ServantLecteur servantLecteur = new ServantLecteur(nomLecteur, bibliotheque);
 		
 		// Déclaration servant Lecteur
 
 		Debug.afficherLog("info","testLecteur : Enregistrement du servant auprès du naming service");
-		corbaManager.enregistrementServant(nomLecteur, monLecteur);
+		corbaManager.enregistrementServant(nomLecteur, servantLecteur);
 		
 		try {
 			Thread.sleep(1);
@@ -52,7 +52,7 @@ public class testLecteur {
 		
 		Lecteur iorLecteur = corbaManager.resolveObjetLecteur(nomLecteur);
 		
-		InterfaceLivreEnLigne interfaceLecteur = new InterfaceLivreEnLigne("mandataire", corbaManager, bibliotheque, nomLecteur, iorLecteur, "controleur");
+		InterfaceLivreEnLigne interfaceLivreEnLigne = new InterfaceLivreEnLigne(corbaManager, bibliotheque, "mandataire", nomLecteur, "controleur");
 		
 		// Demarrer corbaWorker
 		Debug.afficherLog("info","testLecteur : Démmarage Corba Worker");
@@ -65,17 +65,14 @@ public class testLecteur {
 		
 		InfoRecherche resultat;
 		try {
-			resultat = interfaceLecteur.rechercherLivre("titre1", "auteur1");
+			resultat = interfaceLivreEnLigne.rechercherLivre("titre1", "auteur1");
 			
-			System.out.println("fournisseur : "+ resultat.nomFournisseur + " prix : " + resultat.prix );
-			
-			
-			
+			System.out.println("fournisseur : " + resultat.nomFournisseur + " prix : " + resultat.prix );
 			
 			try {
 				Debug.afficherLog("info","testLecteur :  test d'une commande auprès du Fournisseur");
 				
-				resultat.iorFournisseur.commander("titre1", "auteur1", "bla", "bla", nomLecteur, iorLecteur);
+				interfaceLivreEnLigne.commander("titre1", "auteur1", resultat.iorFournisseur, resultat.nomFournisseur,"bla", "bla");
 				
 				Debug.afficherLog("info","testLecteur :  commande reussie");
 				
@@ -92,7 +89,7 @@ public class testLecteur {
 					
 					String contenu;
 					try {
-						contenu = interfaceLecteur.LireLivre(livre);
+						contenu = interfaceLivreEnLigne.LireLivre(livre);
 						
 						Debug.afficherLog("info","Lecture autorisee");
 						

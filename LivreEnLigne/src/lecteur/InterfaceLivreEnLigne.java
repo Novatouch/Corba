@@ -22,15 +22,16 @@ public class InterfaceLivreEnLigne {
 	Controleur iorControleur;
 	Bibliotheque bibliotheque;
 	
-	public InterfaceLivreEnLigne(String pMandataire, CorbaLivreEnLigne pCorbaManager, Bibliotheque pBibliotheque, String pLecteur, Lecteur pIorLecteur, String pNomControleur){
+	public InterfaceLivreEnLigne(CorbaLivreEnLigne pCorbaManager, Bibliotheque pBibliotheque, String pNomMandataire, String pNomLecteur, String pNomControleur){
 		
 		corbaManager = pCorbaManager;
 		// resolution iorMandataire
 		Debug.afficherLog("info","Résolution du Mandataire auprès du serveur de nommage");
-		iorMandataire = corbaManager.resolveObjetMandataire(pMandataire);
+		iorMandataire = corbaManager.resolveObjetMandataire(pNomMandataire);
 		iorControleur = corbaManager.resolveObjetControleur(pNomControleur);
-		iorLecteur = pIorLecteur;
+		iorLecteur = corbaManager.resolveObjetLecteur(pNomLecteur);
 		bibliotheque = pBibliotheque;
+		nomLecteur = pNomLecteur;
 	}
 	
 	public InfoRecherche rechercherLivre(String pTitre, String pAuteur) throws ExceptionNoLivreFound{
@@ -41,11 +42,11 @@ public class InterfaceLivreEnLigne {
 	}
 	
 	public void commander(String pTitre, String pAuteur, Fournisseur pIorFournisseur, String pNomFournisseur, String pCompte, String pCode) throws ExceptionEchecCommande{
-		
-		pIorFournisseur.commander(pTitre, pAuteur, pCompte, pCode, nomLecteur, iorLecteur);
-		
 		LivreUtilisateur nouveauLivre = new LivreUtilisateur(pAuteur, pTitre, pNomFournisseur, pIorFournisseur);
 		bibliotheque.ajouterLivre(nouveauLivre);
+		Debug.afficherLog("info","InterfaceLivreEnLigne > ajout du livre dans la bibliothèque");
+		
+		pIorFournisseur.commander(pTitre, pAuteur, pCompte, pCode, nomLecteur, iorLecteur);
 	}
 	
 	public String LireLivre(LivreUtilisateur pLivre) throws ExceptionAuthorizationFailed, ExceptionLivreNotTelecharge{

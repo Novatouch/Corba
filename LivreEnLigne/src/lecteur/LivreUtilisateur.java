@@ -16,8 +16,8 @@ public class LivreUtilisateur extends Livre {
 		super(pAuteur, pTitre);
 		estTelecharger = false;
 		lectureAutorisee = false;
-		this.nomFournisseur = nomFournisseur;
-		this.iorFournisseur = iorFournisseur;
+		this.nomFournisseur = pNomFournisseur;
+		this.iorFournisseur = pIorFournisseur;
 	}
 	
 	

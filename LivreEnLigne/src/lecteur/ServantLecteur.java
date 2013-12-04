@@ -58,6 +58,7 @@ public class ServantLecteur extends LecteurPOA {
 				
 				livreUtilisateur.setContenu(livreChiffre.contenu);
 				livreUtilisateur.setCle(livreChiffre.cle);
+				livreUtilisateur.setEstTelecharger(true);
 				
 			} catch (ExceptionNoLivreInBibliotheque e) {
 				Debug.afficherLog("error","Livre introuvable dans la bibliotheque, impossible de sauvegarder le contenu");
