@@ -26,6 +26,5 @@ public class ControleurMain {
 		corbaManager.enregistrementServant(nomServeur, monControleur);
 		
 		corbaManager.run();
-
 	}
 }

@@ -63,6 +63,13 @@ public class Telechargement {
 		
 		// enregistrement du resultat livreChiffre
 		livreChiffre = new LivreChiffre (contenuChiffre, cle);
+		
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private String chiffrementContenu(String pContenuAChiffrer, short pCle){

@@ -79,4 +79,12 @@ public class MandatairePOATie extends MandatairePOA
         _tie.enregistrementFournisseur( pFournisseur,  pIorFournisseur);
     }
 
+    /**
+     * Operation flush
+     */
+    public void flush()
+    {
+        _tie.flush();
+    }
+
 }

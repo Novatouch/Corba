@@ -83,25 +83,43 @@ public class FournisseurPOATie extends FournisseurPOA
     /**
      * Operation telechargerLivre
      */
-    public LivreEnLigne.LivreChiffre telechargerLivre(String pTitre, String pAuteur, String pUtilisateur)
+    public LivreEnLigne.LivreChiffre telechargerLivre(String pTitre, String pAuteur, String pUtilisateurProprietaire)
     {
-        return _tie.telechargerLivre( pTitre,  pAuteur,  pUtilisateur);
+        return _tie.telechargerLivre( pTitre,  pAuteur,  pUtilisateurProprietaire);
+    }
+
+    /**
+     * Operation telechargerLivrePret
+     */
+    public LivreEnLigne.LivreChiffre telechargerLivrePret(String pTitre, String pAuteur, String pUtilisateur, String pUtilisateurEmprunteur)
+    {
+        return _tie.telechargerLivrePret( pTitre,  pAuteur,  pUtilisateur,  pUtilisateurEmprunteur);
     }
 
     /**
      * Operation creerPret
      */
-    public void creerPret(String pUtilisateurPreteur, String pUtilisateurEmprunteur, String pTitre, String pAuteur)
+    public void creerPret(String pUtilisateurPreteur, String pUtilisateurEmprunteur, LivreEnLigne.Lecteur pIorUtilisateurEmprunteur, String pTitre, String pAuteur)
+        throws LivreEnLigne.ExceptionPretNotAllowed
     {
-        _tie.creerPret( pUtilisateurPreteur,  pUtilisateurEmprunteur,  pTitre,  pAuteur);
+        _tie.creerPret( pUtilisateurPreteur,  pUtilisateurEmprunteur,  pIorUtilisateurEmprunteur,  pTitre,  pAuteur);
     }
 
     /**
      * Operation retirerPret
      */
-    public void retirerPret(String pUtilisateurPreteur, String pUtilisateurEmprunteur, String pTitre, String pAuteur)
+    public void retirerPret(String pUtilisateurPreteur, String pUtilisateurEmprunteur, LivreEnLigne.Lecteur pIorUtilisateurEmprunteur, String pTitre, String pAuteur)
+        throws LivreEnLigne.ExceptionPretNotDeleted
     {
-        _tie.retirerPret( pUtilisateurPreteur,  pUtilisateurEmprunteur,  pTitre,  pAuteur);
+        _tie.retirerPret( pUtilisateurPreteur,  pUtilisateurEmprunteur,  pIorUtilisateurEmprunteur,  pTitre,  pAuteur);
+    }
+
+    /**
+     * Operation flush
+     */
+    public void flush()
+    {
+        _tie.flush();
     }
 
 }

@@ -37,12 +37,16 @@ public abstract class FournisseurPOA extends org.omg.PortableServer.Servant
                 return _invoke_commander(_is, handler);
         } else if (opName.equals("creerPret")) {
                 return _invoke_creerPret(_is, handler);
+        } else if (opName.equals("flush")) {
+                return _invoke_flush(_is, handler);
         } else if (opName.equals("rechercherLivre")) {
                 return _invoke_rechercherLivre(_is, handler);
         } else if (opName.equals("retirerPret")) {
                 return _invoke_retirerPret(_is, handler);
         } else if (opName.equals("telechargerLivre")) {
                 return _invoke_telechargerLivre(_is, handler);
+        } else if (opName.equals("telechargerLivrePret")) {
+                return _invoke_telechargerLivrePret(_is, handler);
         } else {
             throw new org.omg.CORBA.BAD_OPERATION(opName);
         }
@@ -114,7 +118,7 @@ public abstract class FournisseurPOA extends org.omg.PortableServer.Servant
         return _output;
     }
 
-    private org.omg.CORBA.portable.OutputStream _invoke_creerPret(
+    private org.omg.CORBA.portable.OutputStream _invoke_telechargerLivrePret(
             final org.omg.CORBA.portable.InputStream _is,
             final org.omg.CORBA.portable.ResponseHandler handler) {
         org.omg.CORBA.portable.OutputStream _output;
@@ -123,10 +127,36 @@ public abstract class FournisseurPOA extends org.omg.PortableServer.Servant
         String arg2_in = _is.read_string();
         String arg3_in = _is.read_string();
 
-        creerPret(arg0_in, arg1_in, arg2_in, arg3_in);
+        LivreEnLigne.LivreChiffre _arg_result = telechargerLivrePret(arg0_in, arg1_in, arg2_in, arg3_in);
 
         _output = handler.createReply();
+        LivreEnLigne.LivreChiffreHelper.write(_output,_arg_result);
 
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_creerPret(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        String arg0_in = _is.read_string();
+        String arg1_in = _is.read_string();
+        LivreEnLigne.Lecteur arg2_in = LivreEnLigne.LecteurHelper.read(_is);
+        String arg3_in = _is.read_string();
+        String arg4_in = _is.read_string();
+
+        try
+        {
+            creerPret(arg0_in, arg1_in, arg2_in, arg3_in, arg4_in);
+
+            _output = handler.createReply();
+
+        }
+        catch (LivreEnLigne.ExceptionPretNotAllowed _exception)
+        {
+            _output = handler.createExceptionReply();
+            LivreEnLigne.ExceptionPretNotAllowedHelper.write(_output,_exception);
+        }
         return _output;
     }
 
@@ -136,10 +166,31 @@ public abstract class FournisseurPOA extends org.omg.PortableServer.Servant
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = _is.read_string();
         String arg1_in = _is.read_string();
-        String arg2_in = _is.read_string();
+        LivreEnLigne.Lecteur arg2_in = LivreEnLigne.LecteurHelper.read(_is);
         String arg3_in = _is.read_string();
+        String arg4_in = _is.read_string();
 
-        retirerPret(arg0_in, arg1_in, arg2_in, arg3_in);
+        try
+        {
+            retirerPret(arg0_in, arg1_in, arg2_in, arg3_in, arg4_in);
+
+            _output = handler.createReply();
+
+        }
+        catch (LivreEnLigne.ExceptionPretNotDeleted _exception)
+        {
+            _output = handler.createExceptionReply();
+            LivreEnLigne.ExceptionPretNotDeletedHelper.write(_output,_exception);
+        }
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_flush(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+
+        flush();
 
         _output = handler.createReply();
 

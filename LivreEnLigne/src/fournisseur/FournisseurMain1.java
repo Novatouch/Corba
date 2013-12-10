@@ -21,6 +21,7 @@ public class FournisseurMain1 {
 		
 		Catalogue catalogue = new Catalogue();
 		ListeTelechargement listeTelechargement = new ListeTelechargement();
+		ListeTelechargement listeTelechargementPret = new ListeTelechargement();
 		ListeCommande listeCommande = new ListeCommande();
 		
 		Debug.afficherLog("info","créations des livres");
@@ -44,7 +45,7 @@ public class FournisseurMain1 {
 		
 		// création du servant Mandataire
 		Debug.afficherLog("info","création du servant Fournisseur");
-		ServantFournisseur monFournisseur = new ServantFournisseur(nomServeur, corbaManager, catalogue, listeTelechargement, listeCommande, nomBanque, nomControleur);
+		ServantFournisseur monFournisseur = new ServantFournisseur(nomServeur, corbaManager, catalogue, listeTelechargement, listeTelechargementPret, listeCommande, nomBanque, nomControleur);
 		
 		// enregistrement serveur auprès du serveur de nommage
 		Debug.afficherLog("info","enregistrement du servant Fournisseur auprès du service de nommage");
@@ -67,9 +68,13 @@ public class FournisseurMain1 {
 			t1.start();
 			
 			// Lancement thread chiffrement
-			Debug.afficherLog("info","lancement du Thread ChiffrementWorker");
-			Thread t2 = new Thread(new ChiffrementWorker(listeTelechargement, nomServeur, iorFournisseur));
+			Debug.afficherLog("info","lancement du Thread ChiffrementWorkerAchat");
+			Thread t2 = new Thread(new ChiffrementWorkerAchat(listeTelechargement, nomServeur, iorFournisseur));
 			t2.start();
+			
+			Debug.afficherLog("info","lancement du Thread ChiffrementWorkerPret");
+			Thread t3 = new Thread(new ChiffrementWorkerPret(listeTelechargementPret, nomServeur, iorFournisseur));
+			t3.start();
 			
 		} catch (InterruptedException e) {
 			

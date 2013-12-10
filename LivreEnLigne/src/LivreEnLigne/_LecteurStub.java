@@ -134,7 +134,7 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation recevoirPret
      */
-    public void recevoirPret(String pTitre, String pAuteur, String pContenu, String pCle)
+    public void recevoirPret(String pTitre, String pAuteur, String pNomProprietaire, String pFournisseur, LivreEnLigne.Fournisseur pIorFournisseur)
     {
         while(true)
         {
@@ -146,8 +146,9 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
                     org.omg.CORBA.portable.OutputStream _output = this._request("recevoirPret",true);
                     _output.write_string(pTitre);
                     _output.write_string(pAuteur);
-                    _output.write_string(pContenu);
-                    _output.write_string(pCle);
+                    _output.write_string(pNomProprietaire);
+                    _output.write_string(pFournisseur);
+                    LivreEnLigne.FournisseurHelper.write(_output,pIorFournisseur);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -173,7 +174,7 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
                 LivreEnLigne.LecteurOperations _self = (LivreEnLigne.LecteurOperations) _so.servant;
                 try
                 {
-                    _self.recevoirPret( pTitre,  pAuteur,  pContenu,  pCle);
+                    _self.recevoirPret( pTitre,  pAuteur,  pNomProprietaire,  pFournisseur,  pIorFournisseur);
                     return;
                 }
                 finally
@@ -187,7 +188,7 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation retirerPret
      */
-    public void retirerPret(String pTitre, String pAuteur)
+    public void retirerPret(String pTitre, String pAuteur, String pNomProprietaire)
     {
         while(true)
         {
@@ -199,6 +200,7 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
                     org.omg.CORBA.portable.OutputStream _output = this._request("retirerPret",true);
                     _output.write_string(pTitre);
                     _output.write_string(pAuteur);
+                    _output.write_string(pNomProprietaire);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -224,7 +226,7 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
                 LivreEnLigne.LecteurOperations _self = (LivreEnLigne.LecteurOperations) _so.servant;
                 try
                 {
-                    _self.retirerPret( pTitre,  pAuteur);
+                    _self.retirerPret( pTitre,  pAuteur,  pNomProprietaire);
                     return;
                 }
                 finally

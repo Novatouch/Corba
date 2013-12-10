@@ -21,11 +21,11 @@ public interface LecteurOperations
     /**
      * Operation recevoirPret
      */
-    public void recevoirPret(String pTitre, String pAuteur, String pContenu, String pCle);
+    public void recevoirPret(String pTitre, String pAuteur, String pNomProprietaire, String pFournisseur, LivreEnLigne.Fournisseur pIorFournisseur);
 
     /**
      * Operation retirerPret
      */
-    public void retirerPret(String pTitre, String pAuteur);
+    public void retirerPret(String pTitre, String pAuteur, String pNomProprietaire);
 
 }

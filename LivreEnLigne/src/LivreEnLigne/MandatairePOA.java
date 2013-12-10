@@ -35,6 +35,8 @@ public abstract class MandatairePOA extends org.omg.PortableServer.Servant
 
         if (opName.equals("enregistrementFournisseur")) {
                 return _invoke_enregistrementFournisseur(_is, handler);
+        } else if (opName.equals("flush")) {
+                return _invoke_flush(_is, handler);
         } else if (opName.equals("rechercherLivre")) {
                 return _invoke_rechercherLivre(_is, handler);
         } else {
@@ -74,6 +76,18 @@ public abstract class MandatairePOA extends org.omg.PortableServer.Servant
         LivreEnLigne.Fournisseur arg1_in = LivreEnLigne.FournisseurHelper.read(_is);
 
         enregistrementFournisseur(arg0_in, arg1_in);
+
+        _output = handler.createReply();
+
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_flush(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+
+        flush();
 
         _output = handler.createReply();
 

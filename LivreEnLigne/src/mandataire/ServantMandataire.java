@@ -90,4 +90,10 @@ public class ServantMandataire extends MandatairePOA {
 		Debug.afficherLog("info","Enregistrement fournisseur nom : " + pFournisseur);
 	}
 
+	@Override
+	public void flush() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

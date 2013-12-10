@@ -18,4 +18,9 @@ public interface MandataireOperations
      */
     public void enregistrementFournisseur(String pFournisseur, LivreEnLigne.Fournisseur pIorFournisseur);
 
+    /**
+     * Operation flush
+     */
+    public void flush();
+
 }

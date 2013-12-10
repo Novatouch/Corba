@@ -72,9 +72,19 @@ public class ControleurPOATie extends ControleurPOA
     }
 
     /**
+     * Operation verifierAutorisationPret
+     */
+    public void verifierAutorisationPret(String pTitre, String pAuteur, String pUtilisateurProprietaire, String pUtilisateurEmprunteur, String pFournisseur)
+        throws LivreEnLigne.ExceptionAuthorizationFailed
+    {
+        _tie.verifierAutorisationPret( pTitre,  pAuteur,  pUtilisateurProprietaire,  pUtilisateurEmprunteur,  pFournisseur);
+    }
+
+    /**
      * Operation enregistrerPret
      */
     public void enregistrerPret(String pUtilisateurPreteur, String pUtilisateurEmprunteur, String pTitre, String pAuteur, String pFournisseur)
+        throws LivreEnLigne.ExceptionPretNotSaved
     {
         _tie.enregistrerPret( pUtilisateurPreteur,  pUtilisateurEmprunteur,  pTitre,  pAuteur,  pFournisseur);
     }
@@ -88,19 +98,19 @@ public class ControleurPOATie extends ControleurPOA
     }
 
     /**
-     * Operation validerPret
-     */
-    public void validerPret(String pUtilisateurPreteur, String pUtilisateurEmprunteur, String pTitre, String pAuteur, String pFournisseur)
-    {
-        _tie.validerPret( pUtilisateurPreteur,  pUtilisateurEmprunteur,  pTitre,  pAuteur,  pFournisseur);
-    }
-
-    /**
      * Operation retirerPret
      */
     public void retirerPret(String pUtilisateurPreteur, String pUtilisateurEmprunteur, String pFournisseur, String pTitre, String pAuteur)
     {
         _tie.retirerPret( pUtilisateurPreteur,  pUtilisateurEmprunteur,  pFournisseur,  pTitre,  pAuteur);
+    }
+
+    /**
+     * Operation flush
+     */
+    public void flush()
+    {
+        _tie.flush();
     }
 
 }

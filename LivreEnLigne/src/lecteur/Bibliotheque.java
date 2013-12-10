@@ -9,26 +9,50 @@ import LivreEnLigne.ExceptionNoLivreFound;
 
 public class Bibliotheque {
 
-	private ConcurrentHashMap<String,LivreUtilisateur> bibliotheque = null;
+	private ConcurrentHashMap<String,LivreUtilisateur> listeLivre = null;
+	private ConcurrentHashMap<String,LivreUtilisateurPret> listeLivrePret = null;
 	
 	public Bibliotheque(){
-		bibliotheque = new ConcurrentHashMap<String,LivreUtilisateur>();
+		listeLivre = new ConcurrentHashMap<String,LivreUtilisateur>();
+		listeLivrePret = new ConcurrentHashMap<String,LivreUtilisateurPret>();
 	}
 	
 	public void ajouterLivre(LivreUtilisateur pLivre){
-		bibliotheque.put(pLivre.getTitre() + pLivre.getAuteur() + pLivre.getNomFournisseur(), pLivre);
+		listeLivre.put(pLivre.getTitre() + pLivre.getAuteur() + pLivre.getNomFournisseur(), pLivre);
 		Debug.afficherLog("info","Bibliotheque : ajout d'un livre");
 	}
+	
+	public void ajouterLivrePret(LivreUtilisateurPret pLivre){
+		listeLivrePret.put(pLivre.getTitre() + pLivre.getAuteur() + pLivre.getNomProprietaire(), pLivre);
+		Debug.afficherLog("info","Bibliotheque : ajout d'un livrePret");
+	}
+	
 
 	public ConcurrentHashMap<String, LivreUtilisateur> getBibliotheque() {
-		return bibliotheque;
-	}	
+		return listeLivre;
+	}
 	
 	public LivreUtilisateur rechercherLivre(String pTitre, String pAuteur, String pNomFournisseur) throws ExceptionNoLivreInBibliotheque{
 		
-		if (bibliotheque.containsKey(pTitre + pAuteur + pNomFournisseur) == false){
+		if (listeLivre.containsKey(pTitre + pAuteur + pNomFournisseur) == false){
 			throw new ExceptionNoLivreInBibliotheque();
 		}
-		return bibliotheque.get(pTitre + pAuteur + pNomFournisseur);
+		return listeLivre.get(pTitre + pAuteur + pNomFournisseur);
+	}
+	
+	public LivreUtilisateurPret rechercherLivrePret(String pTitre, String pAuteur, String pNomProprietaire) throws ExceptionNoLivreInBibliotheque{
+		
+		if (listeLivrePret.containsKey(pTitre + pAuteur + pNomProprietaire) == false){
+			throw new ExceptionNoLivreInBibliotheque();
+		}
+		return listeLivrePret.get(pTitre + pAuteur + pNomProprietaire);
+	}
+	
+	public void supprimerPret(String pTitre, String pAuteur, String pUtilisateurProprietaire) throws ExceptionNoLivreFound{
+		if (listeLivrePret.containsKey(pTitre + pAuteur + pUtilisateurProprietaire) == true){
+		listeLivrePret.remove(pTitre + pAuteur + pUtilisateurProprietaire);
+		} else {
+			throw new ExceptionNoLivreFound();
+		}
 	}
 }

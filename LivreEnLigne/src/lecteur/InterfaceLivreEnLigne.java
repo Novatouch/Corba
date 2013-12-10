@@ -4,6 +4,8 @@ import LivreEnLigne.Controleur;
 import LivreEnLigne.ExceptionAuthorizationFailed;
 import LivreEnLigne.ExceptionEchecCommande;
 import LivreEnLigne.ExceptionNoLivreFound;
+import LivreEnLigne.ExceptionPretNotAllowed;
+import LivreEnLigne.ExceptionPretNotDeleted;
 import LivreEnLigne.Fournisseur;
 import LivreEnLigne.InfoRecherche;
 import LivreEnLigne.Lecteur;
@@ -41,6 +43,8 @@ public class InterfaceLivreEnLigne {
 		return resultat;
 	}
 	
+
+	
 	public void commander(String pTitre, String pAuteur, Fournisseur pIorFournisseur, String pNomFournisseur, String pCompte, String pCode) throws ExceptionEchecCommande{
 		LivreUtilisateur nouveauLivre = new LivreUtilisateur(pAuteur, pTitre, pNomFournisseur, pIorFournisseur);
 		bibliotheque.ajouterLivre(nouveauLivre);
@@ -49,20 +53,57 @@ public class InterfaceLivreEnLigne {
 		pIorFournisseur.commander(pTitre, pAuteur, pCompte, pCode, nomLecteur, iorLecteur);
 	}
 	
-	public String LireLivre(LivreUtilisateur pLivre) throws ExceptionAuthorizationFailed, ExceptionLivreNotTelecharge{
+	public String LireLivre(LivreUtilisateurVirtual pLivre) throws ExceptionAuthorizationFailed, ExceptionLivreNotTelecharge, ExceptionPretEstTropOld, ExceptionLivreIsEnCoursPret{
 		
-		if(pLivre.getEstTelecharger() == false){
-			throw new ExceptionLivreNotTelecharge();
-		}
+		// verifie si le livre peut être lu
+		pLivre.lecturePossible();
 		
+		// verifié si la lecture à été autorisée par le controleur
 		if(pLivre.getLectureAutorisee() != true){
 			
 			// demande autorisation auprès controleur
-			iorControleur.verifierAutorisation(pLivre.getTitre(), pLivre.getAuteur(), nomLecteur, pLivre.getNomFournisseur());
-			
+			if (pLivre instanceof LivreUtilisateurPret){
+	
+				LivreUtilisateurPret livre = (LivreUtilisateurPret) pLivre;
+				
+				iorControleur.verifierAutorisationPret(livre.getTitre(), livre.getAuteur(), livre.getNomProprietaire(), nomLecteur, livre.getNomFournisseur());
+			} else {
+				
+				
+				iorControleur.verifierAutorisation(pLivre.getTitre(), pLivre.getAuteur(), nomLecteur, pLivre.getNomFournisseur());
+			}
 			pLivre.setLectureAutorisee(true);
 		}
 		
 		return pLivre.dechiffrementLivre();
+	}
+	
+	
+	public void preterLivre(LivreUtilisateur pLivre, String pUtilisateurEmprunteur) throws ExceptionPretNotAllowed{
+		
+		// recupérer iorFournisseur
+		Fournisseur iorFournisseur = pLivre.getIorFournisseur();
+		
+		// récupérer ior utilisateur emprunteur
+		Lecteur iorUtilisateurEmprunteur = corbaManager.resolveObjetLecteur(pUtilisateurEmprunteur);
+		
+		// mettre a jour info livre
+		pLivre.setNomEmprunteur(pUtilisateurEmprunteur);
+		pLivre.setIorEmprunteur(iorUtilisateurEmprunteur);
+		pLivre.setEstPrete(true);
+		
+		iorFournisseur.creerPret(nomLecteur, pUtilisateurEmprunteur, iorUtilisateurEmprunteur, pLivre.getTitre(), pLivre.getAuteur());
+	}
+	
+	public void annulerPreterLivre(LivreUtilisateur pLivre) throws ExceptionPretNotDeleted{
+		
+		// recup ior Fournisseur
+		Fournisseur iorFournisseur = pLivre.getIorFournisseur();
+		
+		// requête au fournisseur pour supprimer le pret
+		pLivre.setEstPrete(false);
+		
+		iorFournisseur.retirerPret(nomLecteur, pLivre.getNomEmprunteur(), pLivre.getIorEmprunteur(), pLivre.getTitre(), pLivre.getAuteur());
+		
 	}
 }

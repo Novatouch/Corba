@@ -9,13 +9,13 @@ public class CommandeFournisseur extends Commande{
 	
 	private LivreCatalogue livre = null;
 	private Lecteur IorAchetteur = null;
-	private Lecteur IorPreteur = null;
+	private Lecteur IorEmprunteur = null;
 
-	public CommandeFournisseur(String pNomAchetteur, Lecteur pIorAchetteur, String pNomPreteur, Lecteur pIorPreteur, LivreCatalogue pLivre) {
-		super(pNomAchetteur, pNomPreteur);
+	public CommandeFournisseur(String pNomAchetteur, Lecteur pIorAchetteur, String pNomEmprunteur, Lecteur pIorEmprunteur, LivreCatalogue pLivre) {
+		super(pNomAchetteur, pNomEmprunteur);
 		
 		this.IorAchetteur = pIorAchetteur;
-		this.IorPreteur = pIorPreteur;
+		this.IorEmprunteur = pIorEmprunteur;
 		this.livre = pLivre;
 	}
 
@@ -34,12 +34,12 @@ public class CommandeFournisseur extends Commande{
 		IorAchetteur = iorAchetteur;
 	}
 
-	public Lecteur getIorPreteur() {
-		return IorPreteur;
+	public Lecteur getIorEmprunteur() {
+		return IorEmprunteur;
 	}
 
-	public void setIorPreteur(Lecteur iorPreteur) {
-		IorPreteur = iorPreteur;
+	public void setIorEmprunteur(Lecteur iorPreteur) {
+		IorEmprunteur = iorPreteur;
 	}
 	
 	public LivreCatalogue getLivre() {

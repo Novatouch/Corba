@@ -54,5 +54,8 @@ public class ListeTelechargement {
           throw new ExceptionNoLivreToEncrypt();
     }
     
+    public void flush(){
+    	liste.clear();
+    }
     
 }

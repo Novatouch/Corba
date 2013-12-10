@@ -82,17 +82,17 @@ public class LecteurPOATie extends LecteurPOA
     /**
      * Operation recevoirPret
      */
-    public void recevoirPret(String pTitre, String pAuteur, String pContenu, String pCle)
+    public void recevoirPret(String pTitre, String pAuteur, String pNomProprietaire, String pFournisseur, LivreEnLigne.Fournisseur pIorFournisseur)
     {
-        _tie.recevoirPret( pTitre,  pAuteur,  pContenu,  pCle);
+        _tie.recevoirPret( pTitre,  pAuteur,  pNomProprietaire,  pFournisseur,  pIorFournisseur);
     }
 
     /**
      * Operation retirerPret
      */
-    public void retirerPret(String pTitre, String pAuteur)
+    public void retirerPret(String pTitre, String pAuteur, String pNomProprietaire)
     {
-        _tie.retirerPret( pTitre,  pAuteur);
+        _tie.retirerPret( pTitre,  pAuteur,  pNomProprietaire);
     }
 
 }

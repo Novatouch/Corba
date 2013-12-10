@@ -1,93 +1,62 @@
 package lecteur;
 
-import commun.Livre;
 
 import LivreEnLigne.Fournisseur;
+import LivreEnLigne.Lecteur;
 
-public class LivreUtilisateur extends Livre {
+public class LivreUtilisateur extends LivreUtilisateurVirtual {
 
-	private String nomFournisseur = null;
-	private Fournisseur iorFournisseur = null;
-	private short cle;
-	private Boolean estTelecharger;
-	private Boolean lectureAutorisee;
-	
-	public LivreUtilisateur(String pAuteur, String pTitre, String pNomFournisseur, Fournisseur pIorFournisseur) {
-		super(pAuteur, pTitre);
-		estTelecharger = false;
-		lectureAutorisee = false;
-		this.nomFournisseur = pNomFournisseur;
-		this.iorFournisseur = pIorFournisseur;
-	}
+
+
+	private String nomEmprunteur = null;
+	private Lecteur iorEmprunteur = null;
+	protected Boolean estPrete = false;
 	
 	
-	public Boolean getLectureAutorisee() {
-		return lectureAutorisee;
-	}
+	public LivreUtilisateur(String pAuteur, String pTitre,
+			String pNomFournisseur, Fournisseur pIorFournisseur) {
+		super(pAuteur, pTitre, pNomFournisseur, pIorFournisseur);
 
-
-	public void setLectureAutorisee(Boolean lectureAutorisee) {
-		this.lectureAutorisee = lectureAutorisee;
-	}
-
-	public String getNomFournisseur() {
-		return nomFournisseur;
-	}
-
-
-
-	public void setNomFournisseur(String nomFournisseur) {
-		this.nomFournisseur = nomFournisseur;
-	}
-
-
-
-	public Fournisseur getIorFournisseur() {
-		return iorFournisseur;
-	}
-
-
-
-	public void setIorFournisseur(Fournisseur iorFournisseur) {
-		this.iorFournisseur = iorFournisseur;
-	}
-
-
-
-	public short getCle() {
-		return cle;
-	}
-
-
-
-	public void setCle(short cle2) {
-		this.cle = cle2;
-	}
-
-
-
-	public Boolean getEstTelecharger() {
-		return estTelecharger;
-	}
-
-
-
-	public void setEstTelecharger(Boolean estTelecharger) {
-		this.estTelecharger = estTelecharger;
-	}
-
-
-
-	public String dechiffrementLivre(){
-		
-		String chaineDechiffree = "";
-	    for(int i = 0; i < this.contenu.length(); i++)
-	    {
-	    	chaineDechiffree += (char)((int)this.contenu.charAt(i) ^ cle);
-	    }
-	    
-	    return chaineDechiffree;
 	}
 	
+	
+	public Boolean getEstPrete() {
+		return estPrete;
+	}
 
+	public void setEstPrete(Boolean estPrete) {
+		this.estPrete = estPrete;
+	}
+
+	public void lecturePossible() throws  ExceptionLivreIsEnCoursPret, ExceptionLivreNotTelecharge{
+		if(this.estTelecharger == true){
+			if(estPrete == true){
+				throw new ExceptionLivreIsEnCoursPret();
+			}
+		}
+		else {
+			throw new ExceptionLivreNotTelecharge();
+		}
+	}
+
+
+	public String getNomEmprunteur() {
+		return nomEmprunteur;
+	}
+
+
+	public void setNomEmprunteur(String nomEmprunteur) {
+		this.nomEmprunteur = nomEmprunteur;
+	}
+
+
+	public Lecteur getIorEmprunteur() {
+		return iorEmprunteur;
+	}
+
+
+	public void setIorEmprunteur(Lecteur iorEmprunteur) {
+		this.iorEmprunteur = iorEmprunteur;
+	}
+	
 }

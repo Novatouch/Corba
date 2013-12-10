@@ -94,8 +94,9 @@ public abstract class LecteurPOA extends org.omg.PortableServer.Servant
         String arg1_in = _is.read_string();
         String arg2_in = _is.read_string();
         String arg3_in = _is.read_string();
+        LivreEnLigne.Fournisseur arg4_in = LivreEnLigne.FournisseurHelper.read(_is);
 
-        recevoirPret(arg0_in, arg1_in, arg2_in, arg3_in);
+        recevoirPret(arg0_in, arg1_in, arg2_in, arg3_in, arg4_in);
 
         _output = handler.createReply();
 
@@ -108,8 +109,9 @@ public abstract class LecteurPOA extends org.omg.PortableServer.Servant
         org.omg.CORBA.portable.OutputStream _output;
         String arg0_in = _is.read_string();
         String arg1_in = _is.read_string();
+        String arg2_in = _is.read_string();
 
-        retirerPret(arg0_in, arg1_in);
+        retirerPret(arg0_in, arg1_in, arg2_in);
 
         _output = handler.createReply();
 

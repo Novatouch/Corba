@@ -30,22 +30,36 @@ module LivreEnLigne {
     exception ExceptionMoneyTransferRefused {
         string raison;
     };
-	
+
+    exception ExceptionPretNotDeleted {
+        string raison;
+    };
+
+    exception ExceptionPretNotAllowed {
+        string raison;
+    };
+    exception ExceptionPretNotSaved {
+        string raison;
+    };
+
+
     interface Fournisseur;
 
     interface Lecteur {
         void miseAjourLivre( in string pTitre, in string pAuteur, in string pFournisseur) raises (ExceptionMiseAJourLivre);
         void confirmerTelechargement( in string pTitre, in string pAuteur, in string pFournisseur, in Fournisseur pIorFournisseur);
-        void recevoirPret(in string pTitre, in string pAuteur, in string pContenu, in string pCle);
-        void retirerPret(in string pTitre, in string pAuteur);
+        void recevoirPret(in string pTitre, in string pAuteur, in string pNomProprietaire, in string pFournisseur, in Fournisseur pIorFournisseur);
+	void retirerPret(in string pTitre, in string pAuteur, in string pNomProprietaire);
+
     };
 	
     interface Fournisseur {
         float rechercherLivre(in string pTitre, in string pAuteur) raises (ExceptionNoLivreFound);
         void commander(in string pTitre, in string pAuteur, in string pCompte, in string pCode, in string pLecteur, in Lecteur pIorLecteur) raises (ExceptionEchecCommande);
-        LivreChiffre telechargerLivre(in string pTitre, in string pAuteur, in string pUtilisateur);
-        void creerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur);
-        void retirerPret(in string pUtilisateurPreteur,in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur);
+        LivreChiffre telechargerLivre(in string pTitre, in string pAuteur, in string pUtilisateurProprietaire);
+	LivreChiffre telechargerLivrePret(in string pTitre, in string pAuteur, in string pUtilisateur, in string pUtilisateurEmprunteur);
+        void creerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in Lecteur pIorUtilisateurEmprunteur, in string pTitre, in string pAuteur) raises (ExceptionPretNotAllowed);
+        void retirerPret(in string pUtilisateurPreteur,in string pUtilisateurEmprunteur, in Lecteur pIorUtilisateurEmprunteur, in string pTitre, in string pAuteur) raises (ExceptionPretNotDeleted);
 	void flush();
     };
 
@@ -63,9 +77,9 @@ module LivreEnLigne {
 
     interface Controleur {
         void verifierAutorisation(in string pTitre, in string pAuteur, in string pUtilisateur, in string pFournisseur) raises (ExceptionAuthorizationFailed);
-        void enregistrerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur, in string pFournisseur);
+	void verifierAutorisationPret(in string pTitre, in string pAuteur, in string pUtilisateurProprietaire, in string pUtilisateurEmprunteur, in string pFournisseur) raises (ExceptionAuthorizationFailed);
+        void enregistrerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur, in string pFournisseur)  raises (ExceptionPretNotSaved);
         void enregistrerAchat( in string pUtilisateur, in string pTitre, in string pAuteur, in string pFournisseur);
-        void validerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pTitre, in string pAuteur, in string pFournisseur);
         void retirerPret(in string pUtilisateurPreteur, in string pUtilisateurEmprunteur, in string pFournisseur, in string pTitre, in string pAuteur);
 	void flush();
     };

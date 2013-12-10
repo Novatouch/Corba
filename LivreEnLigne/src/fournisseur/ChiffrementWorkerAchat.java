@@ -5,18 +5,30 @@ import LivreEnLigne.Lecteur;
 
 import commun.Debug;
 
-public class ChiffrementWorker implements Runnable{
+public class ChiffrementWorkerAchat implements Runnable{
 
 	private ListeTelechargement listeTelechargement;
 	private String nomServeur = null;
 	private Fournisseur iorFournisseur = null;
 	
-	public ChiffrementWorker(ListeTelechargement pListeTelechargement, String pNomServeur, Fournisseur  pIorFournisseur){
+	public ChiffrementWorkerAchat(ListeTelechargement pListeTelechargement, String pNomServeur, Fournisseur  pIorFournisseur){
 		listeTelechargement = pListeTelechargement;
 		nomServeur = pNomServeur;
 		iorFournisseur = pIorFournisseur;
 	}
 
+	private void chiffrementLivre(Telechargement pObjetTelechargement){
+		// mise à jour des flags
+		pObjetTelechargement.setaChiffre(false);
+		pObjetTelechargement.setEnCoursDeChiffrement(true);
+		
+		// chiffrement du livre
+		pObjetTelechargement.chiffrementContenuLivre();
+		// mise à jour du flag
+		pObjetTelechargement.setEnCoursDeChiffrement(false);
+		pObjetTelechargement.setaEnvoyer(true);
+	}
+	
 	@Override
 	public void run() {
 
@@ -30,15 +42,7 @@ public class ChiffrementWorker implements Runnable{
 				
 				Debug.afficherLog("info","thread chiffrement > livre a chiffre détecté");
 				
-				// mise à jour des flags
-				objetTelechargement.setaChiffre(false);
-				objetTelechargement.setEnCoursDeChiffrement(true);
-				
-				// chiffrement du livre
-				objetTelechargement.chiffrementContenuLivre();
-				// mise à jour du flag
-				objetTelechargement.setEnCoursDeChiffrement(false);
-				objetTelechargement.setaEnvoyer(true);
+				chiffrementLivre(objetTelechargement);
 				
 				// notification au client
 				Lecteur IorAchetteur = objetTelechargement.getCommandeFournisseur().getIorAchetteur();
@@ -48,10 +52,11 @@ public class ChiffrementWorker implements Runnable{
 				Debug.afficherLog("info","thread chiffrement > chiffrement terminé");
 				Debug.afficherLog("info","thread chiffrement > envoi de la confirmation au client");
 				IorAchetteur.confirmerTelechargement(titre, auteur, nomServeur, iorFournisseur);
+								
 				
 			} catch (ExceptionNoLivreToEncrypt e) {
 				try {
-					Thread.sleep(1);
+					Thread.sleep(1000);
 				} catch (InterruptedException e1) {
 					
 					Debug.afficherLog("error","Mise en attente du thread chiffrement impossible");

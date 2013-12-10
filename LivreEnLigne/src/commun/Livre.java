@@ -14,6 +14,7 @@ public class Livre {
 		this.contenu = pContenu;
 	}
 	
+	
 	public Livre(String pAuteur, String pTitre) {
 		
 		this.auteur = pAuteur;

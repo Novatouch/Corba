@@ -10,17 +10,21 @@ public class Commande {
 
 	private String preteur = null;
 
-	private Date debutPret = null;
+	protected long debutPret;
+	
+	protected Boolean estPrete = false;
 	
 	public Commande(String achetteur, String preteur) {
 
 		this.achetteur = achetteur;
 		this.preteur = preteur;
+		debutPret = System.currentTimeMillis();
 	}
 	
 	public Commande(String achetteur) {
 
 		this.achetteur = achetteur;
+		estPrete = false;
 	}
 
 	public String getAchetteur() {
@@ -39,11 +43,25 @@ public class Commande {
 		this.preteur = preteur;
 	}
 
-	public Date getDebutPret() {
+	public long getDebutPret() {
 		return debutPret;
 	}
 
-	public void setDebutPret(Date debutPret) {
-		this.debutPret = debutPret;
+	public void setDebutPret() {
+		this.debutPret = System.currentTimeMillis();
+	}
+	
+	public void setEstPrete(Boolean pBool) {
+		this.estPrete = pBool;
+	}
+	
+	public void estPretable() throws ExceptionLivreNotPretable{
+		
+		long duree = System.currentTimeMillis() - debutPret;
+		long month2 = 30 * 24 * 60 *60 * 100;
+		
+		if (estPrete == true && duree < month2){
+			throw new ExceptionLivreNotPretable();
+		}
 	}
 }

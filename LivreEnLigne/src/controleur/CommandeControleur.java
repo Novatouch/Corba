@@ -2,6 +2,7 @@ package controleur;
 
 import LivreEnLigne.Lecteur;
 import commun.Commande;
+import commun.ExceptionLivreNotPretable;
 
 public class CommandeControleur extends Commande{
 
@@ -40,5 +41,15 @@ public class CommandeControleur extends Commande{
 
 	public void setFournisseur(String fournisseur) {
 		this.fournisseur = fournisseur;
+	}
+	
+	public void pretValide() throws ExceptionPretNotValide{
+		
+		long duree = System.currentTimeMillis() - this.debutPret;
+		long month2 = 30 * 24 * 60 *60 * 100;
+		
+		if((estPrete == false) || (estPrete == true && duree > month2)){
+			throw new ExceptionPretNotValide();
+		}
 	}
 }
