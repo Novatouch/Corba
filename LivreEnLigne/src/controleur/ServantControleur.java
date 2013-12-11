@@ -34,11 +34,16 @@ public class ServantControleur extends ControleurPOA {
 			String pUtilisateurEmprunteur, String pFournisseur, String pTitre,
 			String pAuteur) {
 		
-		Debug.afficherLog("info","ServantControleur > retirerPret : supression enregistrement : " + pTitre + pAuteur + pFournisseur + pUtilisateurPreteur);
+		Debug.afficherLog("info","ServantControleur > retirerPret : enregistrement : " + pTitre + pAuteur + pFournisseur + pUtilisateurPreteur);
 		try {
 			
-			liste.supprimerEnregistrement(pTitre, pAuteur, pFournisseur, pUtilisateurPreteur);
-			Debug.afficherLog("info","ServantControleur > retirerPret : supression de pret effectue");
+			CommandeControleur commande = liste.rechercherEnregistrement(pTitre, pAuteur, pFournisseur, pUtilisateurPreteur);
+			
+			Debug.afficherLog("info","ServantControleur > retirerPret : commande trouvée");
+			
+			commande.setEstPrete(false);
+			
+			Debug.afficherLog("info","ServantControleur > retirerPret : commande mise a jour pret retiré");
 					
 		} catch (ExceptionEnregistrementNotFound e) {
 

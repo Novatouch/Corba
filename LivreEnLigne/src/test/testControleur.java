@@ -42,7 +42,13 @@ public class testControleur {
 				
 				Debug.afficherLog("info","test verification Lecture livre Pret");
 				
+				Debug.afficherLog("info","reverification lecture livre par proprietaire");
+				controleur.verifierAutorisation("titre1", "auteur1", "plop", "fourn");
+				Debug.afficherLog("info","autorisation ok");
+				
+				
 				try {
+					Debug.afficherLog("info","reverification lecture livre pour emprunteur");
 					controleur.verifierAutorisationPret("titre1", "auteur1", "plop", "plop2", "fourn");
 					Debug.afficherLog("info","autorisation Pret ok");
 				
