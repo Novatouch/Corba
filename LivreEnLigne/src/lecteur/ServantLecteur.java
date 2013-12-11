@@ -3,6 +3,7 @@ package lecteur;
 import commun.Debug;
 
 import LivreEnLigne.ExceptionMiseAJourLivre;
+import LivreEnLigne.ExceptionMiseAJourLivrePret;
 import LivreEnLigne.ExceptionNoLivreFound;
 import LivreEnLigne.Fournisseur;
 import LivreEnLigne.LecteurPOA;
@@ -24,12 +25,51 @@ public class ServantLecteur extends LecteurPOA {
 
 	@Override
 	public void miseAjourLivre( String pTitre, String pAuteur,
-			String pFournisseur) throws ExceptionMiseAJourLivre {
-		// TODO Auto-generated method stub
+			String pFournisseur, LivreChiffre pLivre) throws ExceptionMiseAJourLivre {
 		
+		Debug.afficherLog("info","ServantLecteur > miseAjourLivre: reception requete pour enregistrement :" + pTitre + " auteur :" + pAuteur + " fournisseur : " + pFournisseur);
+		
+		// retrouver livre
+		try {
+			LivreUtilisateur livre = bibliotheque.rechercherLivre(pTitre, pAuteur, pFournisseur);
+			
+			livre.setCle(pLivre.cle);
+			livre.setContenu(pLivre.contenu);
+			
+			Debug.afficherLog("info","ServantLecteur > miseAjourLivre: mise à jour terminée");
+			
+		} catch (ExceptionNoLivreInBibliotheque e) {
+			
+			Debug.afficherLog("error","ServantLecteur > miseAjourLivre: mise à jour échouée livre introuvable");
+			throw new ExceptionMiseAJourLivre("pas de livre");
+		}
 	}
 
+	@Override
+	public void miseAjourLivrePret(String pTitre, String pAuteur,
+			String pNomProprietaire, String pFournisseur, LivreChiffre pLivre)
+			throws ExceptionMiseAJourLivrePret {
+		
 
+		Debug.afficherLog("info","ServantLecteur > miseAjourLivrePret: reception requete pour enregistrement :" + pTitre + " auteur :" + pAuteur + " proprietaire : " + pNomProprietaire);
+		
+		// retrouver livre
+		try {
+			LivreUtilisateurPret livre = bibliothequePret.rechercherLivrePret(pTitre, pAuteur, pNomProprietaire);
+			
+			livre.setCle(pLivre.cle);
+			livre.setContenu(pLivre.contenu);
+			
+			Debug.afficherLog("info","ServantLecteur > miseAjourLivrePret: mise à jour terminée");
+			
+		} catch (ExceptionNoLivreInBibliotheque e) {
+			
+			Debug.afficherLog("error","ServantLecteur > miseAjourLivrePret: mise à jour échouée livre introuvable");
+			throw new ExceptionMiseAJourLivrePret("pas de livre");
+		}
+	}
+	
+	
 	@Override
 	public void confirmerTelechargement(String pTitre, String pAuteur,
 			String pNomFournisseur, Fournisseur pIorFournisseur) {
@@ -87,4 +127,6 @@ public class ServantLecteur extends LecteurPOA {
 			Debug.afficherLog("error","ServantLecteur > retirerPret: suppresion pret echoue");
 		}
 	}
+
+
 }

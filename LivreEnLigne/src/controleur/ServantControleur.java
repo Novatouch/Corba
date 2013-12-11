@@ -153,6 +153,7 @@ public class ServantControleur extends ControleurPOA {
 			}else {
 				
 				Debug.afficherLog("error","ServantControleur > verifierAutorisationPret : le nom du prêteur n'est pas présent dans l'enregistrement");
+				
 				// nom preteur n'est pas le même dans la commande
 				throw new ExceptionAuthorizationFailed("plop");
 			}

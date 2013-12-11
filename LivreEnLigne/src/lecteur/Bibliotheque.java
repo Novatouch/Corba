@@ -1,8 +1,10 @@
 package lecteur;
 
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import commun.Debug;
+import fournisseur.CommandeFournisseur;
 
 import LivreEnLigne.ExceptionNoLivreFound;
 
@@ -55,4 +57,42 @@ public class Bibliotheque {
 			throw new ExceptionNoLivreFound();
 		}
 	}
+	
+	public ArrayList<LivreUtilisateur> getLivreAchette(){
+    	ArrayList<LivreUtilisateur> liste = new ArrayList<LivreUtilisateur>();
+    	
+    	// parcours de la liste des commandes
+    	java.util.Iterator<String> myVeryOwnIterator = listeLivre.keySet().iterator();
+    	while(myVeryOwnIterator.hasNext()) {
+    	    String key=(String)myVeryOwnIterator.next();
+    	    
+    	    // Recup commande
+    	    LivreUtilisateur livre = listeLivre.get(key);
+    	    
+    	    // test titre et auteur
+    	    liste.add(livre);
+    	}
+    	
+		return liste;
+	}
+	
+	public ArrayList<LivreUtilisateurPret> getLivreEmprunte(){
+		
+		ArrayList<LivreUtilisateurPret> liste = new ArrayList<LivreUtilisateurPret>();
+    	
+    	// parcours de la liste des commandes
+    	java.util.Iterator<String> myVeryOwnIterator = listeLivrePret.keySet().iterator();
+    	while(myVeryOwnIterator.hasNext()) {
+    	    String key=(String)myVeryOwnIterator.next();
+    	    
+    	    // Recup commande
+    	    LivreUtilisateurPret livre = listeLivrePret.get(key);
+    	    
+    	    // test titre et auteur
+    	    liste.add(livre);
+    	}
+    	
+		return liste;
+	}
+	
 }

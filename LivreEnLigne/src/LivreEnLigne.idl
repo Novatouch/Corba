@@ -15,6 +15,10 @@ module LivreEnLigne {
         string raison;
     };
 
+    exception ExceptionMiseAJourLivrePret {
+        string raison;
+    };
+
     exception ExceptionNoLivreFound {
         string raison;
     };
@@ -46,7 +50,8 @@ module LivreEnLigne {
     interface Fournisseur;
 
     interface Lecteur {
-        void miseAjourLivre( in string pTitre, in string pAuteur, in string pFournisseur) raises (ExceptionMiseAJourLivre);
+        void miseAjourLivre( in string pTitre, in string pAuteur, in string pFournisseur, in LivreChiffre pLivre) raises (ExceptionMiseAJourLivre);
+	void miseAjourLivrePret( in string pTitre, in string pAuteur, in string pNomProprietaire, in string pFournisseur, in LivreChiffre pLivre) raises (ExceptionMiseAJourLivrePret);
         void confirmerTelechargement( in string pTitre, in string pAuteur, in string pFournisseur, in Fournisseur pIorFournisseur);
         void recevoirPret(in string pTitre, in string pAuteur, in string pNomProprietaire, in string pFournisseur, in Fournisseur pIorFournisseur);
 	void retirerPret(in string pTitre, in string pAuteur, in string pNomProprietaire);

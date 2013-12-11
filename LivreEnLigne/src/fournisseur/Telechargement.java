@@ -15,7 +15,9 @@ public class Telechargement {
 	private Boolean aChiffre; 
 	private Boolean enCoursDeChiffrement;
 	private Boolean aEnvoyer;
-	
+	private Boolean miseAjour = false;
+
+
 	public Telechargement(CommandeFournisseur pCommande){
 		
 		commande = pCommande;
@@ -96,4 +98,14 @@ public class Telechargement {
 	public void setLivreChiffre(LivreChiffre livreChiffre) {
 		this.livreChiffre = livreChiffre;
 	}
+	
+	
+	public Boolean getMiseAjour() {
+		return miseAjour;
+	}
+
+	public void setMiseAjour(Boolean miseAjour) {
+		this.miseAjour = miseAjour;
+	}
+	
 }

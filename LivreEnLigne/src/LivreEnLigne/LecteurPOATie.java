@@ -65,10 +65,19 @@ public class LecteurPOATie extends LecteurPOA
     /**
      * Operation miseAjourLivre
      */
-    public void miseAjourLivre(String pTitre, String pAuteur, String pFournisseur)
+    public void miseAjourLivre(String pTitre, String pAuteur, String pFournisseur, LivreEnLigne.LivreChiffre pLivre)
         throws LivreEnLigne.ExceptionMiseAJourLivre
     {
-        _tie.miseAjourLivre( pTitre,  pAuteur,  pFournisseur);
+        _tie.miseAjourLivre( pTitre,  pAuteur,  pFournisseur,  pLivre);
+    }
+
+    /**
+     * Operation miseAjourLivrePret
+     */
+    public void miseAjourLivrePret(String pTitre, String pAuteur, String pNomProprietaire, String pFournisseur, LivreEnLigne.LivreChiffre pLivre)
+        throws LivreEnLigne.ExceptionMiseAJourLivrePret
+    {
+        _tie.miseAjourLivrePret( pTitre,  pAuteur,  pNomProprietaire,  pFournisseur,  pLivre);
     }
 
     /**

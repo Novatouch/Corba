@@ -23,7 +23,7 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation miseAjourLivre
      */
-    public void miseAjourLivre(String pTitre, String pAuteur, String pFournisseur)
+    public void miseAjourLivre(String pTitre, String pAuteur, String pFournisseur, LivreEnLigne.LivreChiffre pLivre)
         throws LivreEnLigne.ExceptionMiseAJourLivre
     {
         while(true)
@@ -37,6 +37,7 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
                     _output.write_string(pTitre);
                     _output.write_string(pAuteur);
                     _output.write_string(pFournisseur);
+                    LivreEnLigne.LivreChiffreHelper.write(_output,pLivre);
                     _input = this._invoke(_output);
                     return;
                 }
@@ -67,7 +68,67 @@ public class _LecteurStub extends org.omg.CORBA.portable.ObjectImpl
                 LivreEnLigne.LecteurOperations _self = (LivreEnLigne.LecteurOperations) _so.servant;
                 try
                 {
-                    _self.miseAjourLivre( pTitre,  pAuteur,  pFournisseur);
+                    _self.miseAjourLivre( pTitre,  pAuteur,  pFournisseur,  pLivre);
+                    return;
+                }
+                finally
+                {
+                    _servant_postinvoke(_so);
+                }
+            }
+        }
+    }
+
+    /**
+     * Operation miseAjourLivrePret
+     */
+    public void miseAjourLivrePret(String pTitre, String pAuteur, String pNomProprietaire, String pFournisseur, LivreEnLigne.LivreChiffre pLivre)
+        throws LivreEnLigne.ExceptionMiseAJourLivrePret
+    {
+        while(true)
+        {
+            if (!this._is_local())
+            {
+                org.omg.CORBA.portable.InputStream _input = null;
+                try
+                {
+                    org.omg.CORBA.portable.OutputStream _output = this._request("miseAjourLivrePret",true);
+                    _output.write_string(pTitre);
+                    _output.write_string(pAuteur);
+                    _output.write_string(pNomProprietaire);
+                    _output.write_string(pFournisseur);
+                    LivreEnLigne.LivreChiffreHelper.write(_output,pLivre);
+                    _input = this._invoke(_output);
+                    return;
+                }
+                catch(org.omg.CORBA.portable.RemarshalException _exception)
+                {
+                    continue;
+                }
+                catch(org.omg.CORBA.portable.ApplicationException _exception)
+                {
+                    String _exception_id = _exception.getId();
+                    if (_exception_id.equals(LivreEnLigne.ExceptionMiseAJourLivrePretHelper.id()))
+                    {
+                        throw LivreEnLigne.ExceptionMiseAJourLivrePretHelper.read(_exception.getInputStream());
+                    }
+
+                    throw new org.omg.CORBA.UNKNOWN("Unexpected User Exception: "+ _exception_id);
+                }
+                finally
+                {
+                    this._releaseReply(_input);
+                }
+            }
+            else
+            {
+                org.omg.CORBA.portable.ServantObject _so = _servant_preinvoke("miseAjourLivrePret",_opsClass);
+                if (_so == null)
+                   continue;
+                LivreEnLigne.LecteurOperations _self = (LivreEnLigne.LecteurOperations) _so.servant;
+                try
+                {
+                    _self.miseAjourLivrePret( pTitre,  pAuteur,  pNomProprietaire,  pFournisseur,  pLivre);
                     return;
                 }
                 finally

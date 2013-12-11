@@ -72,11 +72,16 @@ public class FournisseurMain1 {
 			Thread t2 = new Thread(new ChiffrementWorkerAchat(listeTelechargement, nomServeur, iorFournisseur));
 			t2.start();
 			
+			
 			Debug.afficherLog("info","lancement du Thread ChiffrementWorkerPret");
 			Thread t3 = new Thread(new ChiffrementWorkerPret(listeTelechargementPret, nomServeur, iorFournisseur));
 			t3.start();
 			
+			
 			// Lancement thread modification contenu Livre
+			Debug.afficherLog("info","lancement du Thread ChangementContenuWorker");
+			Thread t4 = new Thread(new ChangementContenuWorker(nomServeur, listeTelechargementPret, listeTelechargement, catalogue, listeCommande));
+			t4.start();
 			
 		} catch (InterruptedException e) {
 			

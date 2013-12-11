@@ -52,6 +52,18 @@ public class Catalogue {
     	}
     }
     
+    public LivreCatalogue getLivre(String pIndice) throws ExceptionNoLivreFound{
+    	
+    	LivreCatalogue livre = catalogue.get(pIndice);
+    	
+    	if (livre == null){
+    		throw new ExceptionNoLivreFound("Le livre ne fait pas partie du catalogue");
+    	}
+    	else {
+    		return livre;
+    	}
+    }
+    
     public  ArrayList<String> getkeys(){
     	ArrayList<String> list =  new ArrayList<String>(catalogue.keySet());
     	return list;

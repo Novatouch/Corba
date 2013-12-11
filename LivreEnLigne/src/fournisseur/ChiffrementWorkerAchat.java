@@ -1,7 +1,9 @@
 package fournisseur;
 
+import LivreEnLigne.ExceptionMiseAJourLivre;
 import LivreEnLigne.Fournisseur;
 import LivreEnLigne.Lecteur;
+import LivreEnLigne.LivreChiffre;
 
 import commun.Debug;
 
@@ -40,7 +42,7 @@ public class ChiffrementWorkerAchat implements Runnable{
 				// parcour de la liste et recherche d'un livre à chiffrer
 				Telechargement objetTelechargement = listeTelechargement.rechercheLivreAChiffrer();
 				
-				Debug.afficherLog("info","thread chiffrement > livre a chiffre détecté");
+				Debug.afficherLog("info","thread chiffrement Achat > livre a chiffre détecté");
 				
 				chiffrementLivre(objetTelechargement);
 				
@@ -49,17 +51,31 @@ public class ChiffrementWorkerAchat implements Runnable{
 				String titre = objetTelechargement.getCommandeFournisseur().getLivre().getTitre();
 				String auteur = objetTelechargement.getCommandeFournisseur().getLivre().getAuteur();
 				
-				Debug.afficherLog("info","thread chiffrement > chiffrement terminé");
-				Debug.afficherLog("info","thread chiffrement > envoi de la confirmation au client");
-				IorAchetteur.confirmerTelechargement(titre, auteur, nomServeur, iorFournisseur);
-								
+				
+				Debug.afficherLog("info","thread chiffrement Achat > chiffrement terminé");
+				
+				
+				if(objetTelechargement.getMiseAjour() == true){
+					
+					try {
+						Debug.afficherLog("info","thread chiffrement Achat > appel fonction  miseAjourLivre client");
+						LivreChiffre livreChiffre = objetTelechargement.getLivreChiffre();
+						IorAchetteur.miseAjourLivre(titre, auteur, nomServeur, livreChiffre);
+					} catch (ExceptionMiseAJourLivre e) {
+						Debug.afficherLog("error","thread chiffrement  Achat >  Erreur mise à jour sur le client");
+					}
+					
+				} else {
+					Debug.afficherLog("info","thread chiffrement  Achat > appel fonction  confirmerTelechargement client");
+					IorAchetteur.confirmerTelechargement(titre, auteur, nomServeur, iorFournisseur);
+				}								
 				
 			} catch (ExceptionNoLivreToEncrypt e) {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e1) {
 					
-					Debug.afficherLog("error","Mise en attente du thread chiffrement impossible");
+					Debug.afficherLog("error","thread chiffrement  Achat > Mise en attente du thread chiffrement impossible");
 					continuer = false;
 				}
 			}

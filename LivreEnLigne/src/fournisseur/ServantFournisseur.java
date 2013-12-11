@@ -114,6 +114,7 @@ public class ServantFournisseur extends FournisseurPOA {
 				// ajouter le livre à la liste des chiffrement
 				Telechargement nouveauTelechargement = new Telechargement(commandeFournisseur);
 				
+				
 				Debug.afficherLog("info","ajout du livre dans la liste des telechargement");
 				listeTelechargement.ajouterTelechargement(nouveauTelechargement);
 				

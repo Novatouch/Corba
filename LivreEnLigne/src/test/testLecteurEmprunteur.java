@@ -62,7 +62,7 @@ public class testLecteurEmprunteur {
 		}
 		
 		Debug.afficherLog("info","testLecteurEnprunteur : création InterfaceLivreEnLigne");
-		InterfaceLivreEnLigne interfaceLivreEnLigne = new InterfaceLivreEnLigne(corbaManager, bibliotheque, "mandataire", nomLecteur, "controleur");
+		InterfaceLivreEnLigne interfaceLivreEnLigne = new InterfaceLivreEnLigne(corbaManager, bibliotheque, bibliothequePret, "mandataire", nomLecteur, "controleur");
 		
 		
 		Scanner sc = new Scanner(System.in);
@@ -118,7 +118,5 @@ public class testLecteurEmprunteur {
 			Debug.afficherLog("error","testLecteurEnprunteur : le livre n'est pas dans la biblotheque");
 			
 		}
-		
-		
 	}
 }

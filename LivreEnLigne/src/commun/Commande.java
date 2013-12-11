@@ -47,6 +47,10 @@ public class Commande {
 		return debutPret;
 	}
 
+	public Boolean getEstPrete() {
+		return estPrete;
+	}
+
 	public void setDebutPret() {
 		this.debutPret = System.currentTimeMillis();
 	}

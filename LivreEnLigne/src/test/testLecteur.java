@@ -58,7 +58,7 @@ public class testLecteur {
 		
 		Lecteur iorLecteur = corbaManager.resolveObjetLecteur(nomLecteur);
 		
-		InterfaceLivreEnLigne interfaceLivreEnLigne = new InterfaceLivreEnLigne(corbaManager, bibliotheque, "mandataire", nomLecteur, "controleur");
+		InterfaceLivreEnLigne interfaceLivreEnLigne = new InterfaceLivreEnLigne(corbaManager, bibliotheque, bibliothequePret, "mandataire", nomLecteur, "controleur");
 		
 		// Demarrer corbaWorker
 		Debug.afficherLog("info","testLecteur : Démmarage Corba Worker");
@@ -116,17 +116,19 @@ public class testLecteur {
 										
 						// declaration du pret
 						try {
+							
 							Debug.afficherLog("info","testLecteur : declaration d'un pret de livre");
 							interfaceLivreEnLigne.preterLivre(livre,nomLecteur2);
 						
 							sc1 = new Scanner(System.in);
+							/*
 							System.out.println("testLecteur : tester à nouveau la lecture : (y/n)");
 							
 							str1 = sc1.nextLine();
 							
 							// Tentative de lecture du Livre
 							str = interfaceLivreEnLigne.LireLivre(livre);
-							
+							*/
 							Debug.afficherLog("info","testLecteur : contenu du livre :" + str);
 							
 							sc1 = new Scanner(System.in);

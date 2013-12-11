@@ -37,6 +37,8 @@ public abstract class LecteurPOA extends org.omg.PortableServer.Servant
                 return _invoke_confirmerTelechargement(_is, handler);
         } else if (opName.equals("miseAjourLivre")) {
                 return _invoke_miseAjourLivre(_is, handler);
+        } else if (opName.equals("miseAjourLivrePret")) {
+                return _invoke_miseAjourLivrePret(_is, handler);
         } else if (opName.equals("recevoirPret")) {
                 return _invoke_recevoirPret(_is, handler);
         } else if (opName.equals("retirerPret")) {
@@ -54,10 +56,11 @@ public abstract class LecteurPOA extends org.omg.PortableServer.Servant
         String arg0_in = _is.read_string();
         String arg1_in = _is.read_string();
         String arg2_in = _is.read_string();
+        LivreEnLigne.LivreChiffre arg3_in = LivreEnLigne.LivreChiffreHelper.read(_is);
 
         try
         {
-            miseAjourLivre(arg0_in, arg1_in, arg2_in);
+            miseAjourLivre(arg0_in, arg1_in, arg2_in, arg3_in);
 
             _output = handler.createReply();
 
@@ -66,6 +69,31 @@ public abstract class LecteurPOA extends org.omg.PortableServer.Servant
         {
             _output = handler.createExceptionReply();
             LivreEnLigne.ExceptionMiseAJourLivreHelper.write(_output,_exception);
+        }
+        return _output;
+    }
+
+    private org.omg.CORBA.portable.OutputStream _invoke_miseAjourLivrePret(
+            final org.omg.CORBA.portable.InputStream _is,
+            final org.omg.CORBA.portable.ResponseHandler handler) {
+        org.omg.CORBA.portable.OutputStream _output;
+        String arg0_in = _is.read_string();
+        String arg1_in = _is.read_string();
+        String arg2_in = _is.read_string();
+        String arg3_in = _is.read_string();
+        LivreEnLigne.LivreChiffre arg4_in = LivreEnLigne.LivreChiffreHelper.read(_is);
+
+        try
+        {
+            miseAjourLivrePret(arg0_in, arg1_in, arg2_in, arg3_in, arg4_in);
+
+            _output = handler.createReply();
+
+        }
+        catch (LivreEnLigne.ExceptionMiseAJourLivrePret _exception)
+        {
+            _output = handler.createExceptionReply();
+            LivreEnLigne.ExceptionMiseAJourLivrePretHelper.write(_output,_exception);
         }
         return _output;
     }

@@ -1,5 +1,7 @@
 package lecteur;
 
+import java.util.ArrayList;
+
 import LivreEnLigne.Controleur;
 import LivreEnLigne.ExceptionAuthorizationFailed;
 import LivreEnLigne.ExceptionEchecCommande;
@@ -23,8 +25,34 @@ public class InterfaceLivreEnLigne {
 	Lecteur iorLecteur;
 	Controleur iorControleur;
 	Bibliotheque bibliotheque;
+	Bibliotheque bibliothequePret;
 	
-	public InterfaceLivreEnLigne(CorbaLivreEnLigne pCorbaManager, Bibliotheque pBibliotheque, String pNomMandataire, String pNomLecteur, String pNomControleur){
+	
+	
+	/**
+	 * Constructeur de la classe 
+	 * 
+	 * 
+	 * 
+	 * @param pCorbaManager
+     *           Objet corba faisant l'interface avec la partie corba.
+     *           
+	 * @param pBibliotheque
+     *           Objet bibliothèque contenant les livres Achettés par le lecteur.
+     *                    
+	 * @param bibliothequePret
+     *           Objet bibliothèquePret contenant les livres pretés par le lecteur.
+     *           
+	 * @param pNomMandataire
+     *           nom du serveur mandataire.
+     *           
+	 * @param pNomControleur
+     *           nom du serveur controleur.
+     *               
+	 */
+	
+	public InterfaceLivreEnLigne(CorbaLivreEnLigne pCorbaManager, Bibliotheque pBibliotheque, Bibliotheque bibliothequePret,
+			String pNomMandataire, String pNomLecteur, String pNomControleur){
 		
 		corbaManager = pCorbaManager;
 		// resolution iorMandataire
@@ -33,8 +61,27 @@ public class InterfaceLivreEnLigne {
 		iorControleur = corbaManager.resolveObjetControleur(pNomControleur);
 		iorLecteur = corbaManager.resolveObjetLecteur(pNomLecteur);
 		bibliotheque = pBibliotheque;
+		bibliothequePret = bibliothequePret;
 		nomLecteur = pNomLecteur;
 	}
+	
+	
+	/**
+	 * fonction permettant de faire des recherches via le mandataire
+	 * 
+	 * @param pTitre
+     *           titre de l'oeuvre.
+     *           
+	 * @param pAuteur
+     *           nom de l'auteur.
+     *           
+     * @return  resultat
+     * 			 instance de la classe InfoRecherche contient le prix et le nom du 
+     * 			 fournisseur ainsi que son ior
+     * 
+     * @throws ExceptionNoLivreFound  
+     *           
+	 */
 	
 	public InfoRecherche rechercherLivre(String pTitre, String pAuteur) throws ExceptionNoLivreFound{
 	
@@ -44,6 +91,31 @@ public class InterfaceLivreEnLigne {
 	}
 	
 
+	/**
+	 * fonction permettant de faire une comm
+	 * 
+	 * @param pTitre
+     *           titre de l'oeuvre.
+     *           
+	 * @param pAuteur
+     *           nom de l'auteur.
+     *           
+	 * @param pIorFournisseur
+     *           ior du fournisseur.
+     *           
+	 * @param pNomFournisseur
+     *           nom du fournisseur.         
+     *           
+	 * @param pCompte
+     *           numero Compte.
+     *           
+	 * @param pCle
+     *           numero cle compte.    
+     *           
+     *           
+     * @throws ExceptionEchecCommande       
+     *           
+	 */
 	
 	public void commander(String pTitre, String pAuteur, Fournisseur pIorFournisseur, String pNomFournisseur, String pCompte, String pCode) throws ExceptionEchecCommande{
 		LivreUtilisateur nouveauLivre = new LivreUtilisateur(pAuteur, pTitre, pNomFournisseur, pIorFournisseur);
@@ -52,6 +124,46 @@ public class InterfaceLivreEnLigne {
 		
 		pIorFournisseur.commander(pTitre, pAuteur, pCompte, pCode, nomLecteur, iorLecteur);
 	}
+	
+
+	/**
+	 * fonction permettant de Lire un Livre
+	 * 
+	 * @param pTitre
+     *           titre de l'oeuvre.
+     *           
+	 * @param pAuteur
+     *           nom de l'auteur.
+     *           
+	 * @param pIorFournisseur
+     *           ior du fournisseur.
+     *           
+	 * @param pNomFournisseur
+     *           nom du fournisseur.         
+     *           
+	 * @param pCompte
+     *           numero Compte.
+     *           
+	 * @param pCle
+     *           numero cle compte.    
+     *           
+     *           
+     * @throws ExceptionAuthorizationFailed
+     * 			le controleur n'a pas autorisé la lecture
+     * 
+     * @throws ExceptionLivreNotTelecharge  
+     * 			le livre n'est pas encore téléchargé
+     * 
+     * @throws ExceptionPretEstTropOld 
+     * 			le prêt à expiré
+     * 
+     * 
+     * @throws ExceptionLivreIsEnCoursPret
+     * 			le livre a été prêté
+     * 
+     * @return  Contenu du livre
+     * 			           
+	 */
 	
 	public String LireLivre(LivreUtilisateurVirtual pLivre) throws ExceptionAuthorizationFailed, ExceptionLivreNotTelecharge, ExceptionPretEstTropOld, ExceptionLivreIsEnCoursPret{
 		
@@ -79,6 +191,22 @@ public class InterfaceLivreEnLigne {
 	}
 	
 	
+	/**
+	 * fonction permettant de prêter un Livre
+	 * 
+	 * @param pLivre
+     *           livre à prêter.
+     *           
+	 * @param pUtilisateurEmprunteur
+     *           nom de l'utilisateur preteur.
+     *           
+     * 
+     * @throws ExceptionPretNotAllowed
+     * 			le prêt n'a pas été autorisé
+     * 
+     * 			           
+	 */
+	
 	public void preterLivre(LivreUtilisateur pLivre, String pUtilisateurEmprunteur) throws ExceptionPretNotAllowed{
 		
 		// recupérer iorFournisseur
@@ -95,6 +223,20 @@ public class InterfaceLivreEnLigne {
 		iorFournisseur.creerPret(nomLecteur, pUtilisateurEmprunteur, iorUtilisateurEmprunteur, pLivre.getTitre(), pLivre.getAuteur());
 	}
 	
+	
+	/**
+	 * fonction permettant d'annuler un prêt
+	 * 
+	 * @param pLivre
+     *           livre à prêter.
+     *                    
+     * 
+     * @throws ExceptionPretNotDeleted
+     * 			le prêt n'a pas été supprimé
+     * 
+     * 			           
+	 */
+
 	public void annulerPreterLivre(LivreUtilisateur pLivre) throws ExceptionPretNotDeleted{
 		
 		// recup ior Fournisseur
@@ -105,5 +247,41 @@ public class InterfaceLivreEnLigne {
 		
 		iorFournisseur.retirerPret(nomLecteur, pLivre.getNomEmprunteur(), pLivre.getIorEmprunteur(), pLivre.getTitre(), pLivre.getAuteur());
 		
+	}
+	
+	
+	/**
+	 * fonction permettant de récupérer les livres achettés
+	 * Remarque: Il est possible que certains livre ne soit pas encore téléchargés.
+	 * 
+     * @return     ArrayList<LivreUtilisateur>
+     * 			             
+     * 
+     * @throws ExceptionPretNotDeleted
+     * 			le prêt n'a pas été supprimé
+     * 			           
+	 */
+	
+	public ArrayList<LivreUtilisateur> getLivreAchette(){
+		
+		return bibliotheque.getLivreAchette();
+	}
+	
+	
+	/**
+	 * fonction permettant de récupérer les livres prètés
+	 * 
+	 * 
+     * @return     ArrayList<LivreUtilisateurPret>
+     * 			             
+     * 
+     * @throws ExceptionPretNotDeleted
+     * 			le prêt n'a pas été supprimé
+     * 			           
+	 */
+	
+	public ArrayList<LivreUtilisateurPret> getLivreEmprunte(){
+		
+		return bibliotheque.getLivreEmprunte();
 	}
 }
