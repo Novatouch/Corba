@@ -104,23 +104,45 @@ public class LecteurMain {
 		LivreUtilisateur livre;
 		String contenu;
 		
-		ArrayList<LivreUtilisateur> livreAchete = bibliotheque.getLivreAchette();
+		//récuperation des listes de livres
+		ArrayList<LivreUtilisateur> livreAchete = interfaceLivreEnLigne.getLivreAchette();
+		ArrayList<LivreUtilisateurPret> livreEmprunte = interfaceLivreEnLigne.getLivreEmprunte();
 		
-		java.util.Iterator<LivreUtilisateur> it = livreAchete.iterator();
+		//creation des iterators
+		java.util.Iterator<LivreUtilisateur> itachete = livreAchete.iterator();
+		java.util.Iterator<LivreUtilisateur> itemprunte = livreAchete.iterator();
+		
 		
 		int i = 1;
 		
-		System.out.println("toto1");
-		
-		while (it.hasNext()) {
+		System.out.println("\nListe des livres que vous possedez : \n");
+		while (itachete.hasNext()) {
 			
-			   LivreUtilisateur li = it.next();
-		       System.out.println("\n "+ i + "]\t" + li.getTitre() + "\t\t\t de : " + li.getAuteur());
+			   LivreUtilisateur li = itachete.next();
+		       System.out.println(i + "]\t" + li.getTitre() + "\t\t\t de : " + li.getAuteur());
 		       i++;
-		       System.out.println("toto2");
+		       
+		}
+		
+		if (i==1){
+			System.out.println("Vous n'avez aucun livres");
+		}
+		
+		System.out.println("\nListe des livres que l'on vous a preté : \n");
+		
+		int j = 1;
+		while (itemprunte.hasNext()) {
+			
+			   LivreUtilisateur li = itemprunte.next();
+		       System.out.println("\n "+ i + "]\t" + li.getTitre() + "\t\t\t de : " + li.getAuteur());
+		       j++;
+		   
+		}
+		
+		if (j==1){
+			System.out.println("Personne ne vous a prété de livre");
 		}
 
-		System.out.println("toto3");
 				
 		
 		//Saisie de la recherche du livre
