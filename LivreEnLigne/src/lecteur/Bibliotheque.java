@@ -13,7 +13,7 @@ public class Bibliotheque {
 
 	private ConcurrentHashMap<String,LivreUtilisateur> listeLivre = null;
 	private ConcurrentHashMap<String,LivreUtilisateurPret> listeLivrePret = null;
-	
+		
 	public Bibliotheque(){
 		listeLivre = new ConcurrentHashMap<String,LivreUtilisateur>();
 		listeLivrePret = new ConcurrentHashMap<String,LivreUtilisateurPret>();
