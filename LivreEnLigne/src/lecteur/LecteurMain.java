@@ -14,6 +14,7 @@ import LivreEnLigne.Lecteur;
 import commun.Debug;
 
 import corba.CorbaLivreEnLigne;
+import fournisseur.ExceptionSaisieDeMerde;
 
 public class LecteurMain {
 
@@ -24,8 +25,10 @@ public class LecteurMain {
 
 	public static void main(String[] args) throws ExceptionAuthorizationFailed, ExceptionPretEstTropOld, ExceptionLivreIsEnCoursPret {
 
-		String nomLecteur = "lecteur1";
-		String nomLecteur2 = "lecteur2";
+
+		//Saisie du nom d utilisateur
+		System.out.println("\nVotre nom?");
+		String nomLecteur = sc.nextLine();
 
 		Debug.afficherLog("info","testLecteur :  Lancement testLecteur");
 		CorbaLivreEnLigne corbaManager = new CorbaLivreEnLigne(args);
@@ -33,14 +36,14 @@ public class LecteurMain {
 		Bibliotheque bibliotheque = new Bibliotheque();
 		Bibliotheque bibliothequePret = new Bibliotheque();
 
-		Debug.afficherLog("info","testLecteur : création InterfaceLivreEnLigne");
+		Debug.afficherLog("info","testLecteur : crÃ©ation InterfaceLivreEnLigne");
 
-		// création servant Lecteur 
+		// crÃ©ation servant Lecteur 
 		ServantLecteur servantLecteur = new ServantLecteur(nomLecteur, bibliotheque, bibliothequePret);
 
-		// Déclaration servant Lecteur
+		// DÃ©claration servant Lecteur
 
-		Debug.afficherLog("info","testLecteur : Enregistrement du servant auprès du naming service");
+		Debug.afficherLog("info","testLecteur : Enregistrement du servant auprÃ¨s du naming service");
 		corbaManager.enregistrementServant(nomLecteur, servantLecteur);
 
 		try {
@@ -54,7 +57,7 @@ public class LecteurMain {
 		InterfaceLivreEnLigne interfaceLivreEnLigne = new InterfaceLivreEnLigne(corbaManager, bibliotheque, bibliothequePret, "mandataire", nomLecteur, "controleur");
 
 		// Demarrer corbaWorker
-		Debug.afficherLog("info","testLecteur : Démmarage Corba Worker");
+		Debug.afficherLog("info","testLecteur : DÃ©mmarage Corba Worker");
 
 		Thread t1 = new Thread(new LecteurCorbaWorker(corbaManager));
 		t1.start();
@@ -73,7 +76,7 @@ public class LecteurMain {
 
 		String value;
 
-		System.out.println("\nQue souhaitez vous faire ?\n1 - Acc�der � ma biblioth�que\n2 - Acheter un livre\n3 - Pr�ter un livre\n4 - Annuler un pr�t");
+		System.out.println("\nQue souhaitez vous faire ?\n1 - Accéder à ma bibliothèque\n2 - Acheter un livre\n3 - Prêter un livre\n4 - Annuler un prêt");
 		value = sc.nextLine();
 		switch (value) {
 		case "1":
@@ -91,90 +94,97 @@ public class LecteurMain {
 			System.out.println("annulerPret()");
 			break;
 		default:
-			System.out.println("Merci de choisir une option propos�e dans le menu");
+			System.out.println("Merci de choisir une option proposée dans le menu");
 			break;
 		}
 
 	}
 
 	private static void lectureLivre (InterfaceLivreEnLigne interfaceLivreEnLigne, Bibliotheque bibliotheque, Bibliotheque bibliothequePret) throws ExceptionAuthorizationFailed, ExceptionPretEstTropOld, ExceptionLivreIsEnCoursPret {
-		
-		String auteur;
-		String titre;
-		LivreUtilisateur livre;
+
+
 		String contenu;
-		
-		//r�cuperation des listes de livres
+		String value;
+		int indice;
+
+		//récuperation des listes de livres
 		ArrayList<LivreUtilisateur> livreAchete = interfaceLivreEnLigne.getLivreAchette();
 		ArrayList<LivreUtilisateurPret> livreEmprunte = interfaceLivreEnLigne.getLivreEmprunte();
-		
+
 		//creation des iterators
 		java.util.Iterator<LivreUtilisateur> itachete = livreAchete.iterator();
-		java.util.Iterator<LivreUtilisateur> itemprunte = livreAchete.iterator();
-		
-		
+		java.util.Iterator<LivreUtilisateurPret> itemprunte = livreEmprunte.iterator();
+
+
 		int i = 1;
-		
+
 		System.out.println("\nListe des livres que vous possedez : \n");
 		while (itachete.hasNext()) {
-			
-			   LivreUtilisateur li = itachete.next();
-		       System.out.println(i + "]\t" + li.getTitre() + "\t\t\t de : " + li.getAuteur());
-		       i++;
-		       
+
+			LivreUtilisateur li = itachete.next();
+			System.out.println(i + "]\t" + li.getTitre() + "\t\t\t de : " + li.getAuteur());
+			i++;
+
 		}
-		
+
 		if (i==1){
 			System.out.println("Vous n'avez aucun livres");
 		}
-		
-		System.out.println("\nListe des livres que l'on vous a pret� : \n");
-		
-		int j = 1;
+
+		System.out.println("\nListe des livres que l'on vous a preté : \n");
+
+		int j = i;
 		while (itemprunte.hasNext()) {
-			
-			   LivreUtilisateur li = itemprunte.next();
-		       System.out.println("\n "+ i + "]\t" + li.getTitre() + "\t\t\t de : " + li.getAuteur());
-		       j++;
-		   
+
+			LivreUtilisateurPret li = itemprunte.next();
+			System.out.println(j + "]\t" + li.getTitre() + "\t\t\t de : " + li.getAuteur());
+			j++;
+
 		}
-		
+
 		if (j==1){
-			System.out.println("Personne ne vous a pr�t� de livre");
+			System.out.println("Personne ne vous a prété de livre");
 		}
 
-				
-		
-		//Saisie de la recherche du livre
-		System.out.println("\nTitre du livre � lire ?");
-		titre = sc.nextLine();
+		if (j>1){
 
-		System.out.println("\nAuteur du livre � lire ?");
-		auteur = sc.nextLine();
-		
-		try {
-			
-			Debug.afficherLog("info","testLecteur :  tentative de lecture du livre");
-			livre = bibliotheque.rechercherLivre(titre, auteur, "fournisseur1");
-			
-			
+			//Saisie de la recherche du livre
+			System.out.println("\nChoisir un livre : ");
+
+			value = sc.nextLine();
+
 			try {
-				
-				// Lecture livre
-				contenu = interfaceLivreEnLigne.LireLivre(livre);
-				
-				
-				Debug.afficherLog("info","Lecture autorisee");
-				
-				System.out.println("Contenu livre : " + contenu);
-				
-			} catch (ExceptionLivreNotTelecharge e) {
-				
-				Debug.afficherLog("info","testLecteur :  Le livre n'a pas encore été téléchargé auprès du fournisseur");
+				Integer nombre = Integer.parseInt(value);
+
+				if (nombre > 0 || nombre < j){
+
+					LivreUtilisateurVirtual livre;
+					if (nombre >= i){
+						indice =  nombre - i;
+						livre = livreEmprunte.get(indice);
+					} else {
+						indice = nombre - 1;
+						livre = livreAchete.get(indice);
+					}
+
+
+					try {
+						System.out.println(interfaceLivreEnLigne.LireLivre(livre));
+					} catch (ExceptionLivreNotTelecharge e) {
+						System.out.println("Le livre n'a pas encore Ã©tÃ© tÃ©lÃ©chargÃ© auprÃ¨s du fournisseur");
+						e.printStackTrace();
+					}
+
+				}
+				else {
+					System.out.println("Le livre que vous avez choisir n'est pas dans la liste");
+				}
+
+			} catch (NumberFormatException e) {
+
+				System.out.println("Saisie invalide");
 			}
-			
-		} catch (ExceptionNoLivreInBibliotheque e) {
-			Debug.afficherLog("info","testLecteur :  livre introuvable dans la biliotheque");
+
 		}
 
 	}
@@ -201,41 +211,41 @@ public class LecteurMain {
 
 			System.out.println("\nRecherche du livre "+ titre +" ecrit par "+ auteur +".");
 
-			//Affichage de la r�ponse du mandataire
+			//Affichage de la réponse du mandataire
 			System.out.println("fournisseur : " + resultat.nomFournisseur + " prix : " + resultat.prix );
 
 
 			//Demande d'achat 
 			System.out.println("Voulez vous acheter le livre ? ([Y]/n)");
 			value = sc.nextLine();
-			
+
 			if (value == "n" || value == "N") {
 				return;
 			} else {
 				commande(titre , auteur, resultat, interfaceLivreEnLigne);
 			}
-			
+
 		} catch (ExceptionNoLivreFound e) {
 
-			Debug.afficherLog("info","testLecteur : le mandataire n'a retourné aucun résultat");
+			System.out.println("le mandataire n'a retournÃ© aucun rÃ©sultat");
 		}
 
 
 	}
-	
+
 	private static void commande( String ptitre, String pauteur, InfoRecherche resultat, InterfaceLivreEnLigne interfaceLivreEnLigne) {
 		try {
-			
+
 			String compte;
 			String code;
-			
+
 			//Saisie de la recherche du livre
-			System.out.println("\n Saisir votre num�ro de compte :");
+			System.out.println("\n Saisir votre numéro de compte :");
 			compte = sc.nextLine();
 
 			System.out.println("\n Saisir votre code :");
 			code = sc.nextLine();
-			
+
 			// commande livre 
 			interfaceLivreEnLigne.commander(ptitre , pauteur, resultat.iorFournisseur, resultat.nomFournisseur,compte, code);
 
@@ -243,10 +253,10 @@ public class LecteurMain {
 
 		} catch (ExceptionEchecCommande e) {
 
-			Debug.afficherLog("info","testLecteur :  commande auprès du Fournisseur echouée");
+			System.out.println("commande auprÃ¨s du Fournisseur echouÃ©e");
 		}	
 	}
-	
+
 
 	private void pretLivre () {		
 
