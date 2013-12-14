@@ -73,7 +73,7 @@ public class LecteurMain {
 
 	}
 
-	private void makeChoise (InterfaceLivreEnLigne interfaceLivreEnLigne, Bibliotheque bibliotheque, Bibliotheque bibliothequePret ) {
+	private static void makeChoise (InterfaceLivreEnLigne interfaceLivreEnLigne, Bibliotheque bibliotheque, Bibliotheque bibliothequePret ) {
 		Scanner sc = new Scanner(System.in);
 		
 		String value;
@@ -107,7 +107,6 @@ public class LecteurMain {
 	private static void lectureLivre (InterfaceLivreEnLigne interfaceLivreEnLigne, Bibliotheque bibliotheque, Bibliotheque bibliothequePret) {
 		Scanner sc = new Scanner(System.in);
 
-		String contenu;
 		String value;
 		int indice;
 
@@ -201,7 +200,7 @@ public class LecteurMain {
 	}
 
 
-	private void achatLivre (InterfaceLivreEnLigne interfaceLivreEnLigne) {
+	private static void achatLivre (InterfaceLivreEnLigne interfaceLivreEnLigne) {
 		
 		Scanner sc = new Scanner(System.in);
 
@@ -246,7 +245,7 @@ public class LecteurMain {
 
 	}
 
-	private void commande( String ptitre, String pauteur, InfoRecherche resultat, InterfaceLivreEnLigne interfaceLivreEnLigne) {
+	private static void commande( String ptitre, String pauteur, InfoRecherche resultat, InterfaceLivreEnLigne interfaceLivreEnLigne) {
 		try {
 			Scanner sc = new Scanner(System.in);
 
@@ -272,7 +271,7 @@ public class LecteurMain {
 	}
 
 
-	private void pretLivre (InterfaceLivreEnLigne interfaceLivreEnLigne) {
+	private static void pretLivre (InterfaceLivreEnLigne interfaceLivreEnLigne) {
 		Scanner sc = new Scanner(System.in);
 		//récuperation des listes de livres
 		ArrayList<LivreUtilisateur> livreAchete = interfaceLivreEnLigne.getLivreAchette();
@@ -322,7 +321,7 @@ public class LecteurMain {
 
 	}
 
-	private void annulerPret (InterfaceLivreEnLigne interfaceLivreEnLigne) {
+	private static void annulerPret (InterfaceLivreEnLigne interfaceLivreEnLigne) {
 		Scanner sc = new Scanner(System.in);
 		//récuperation des listes de livres
 		ArrayList<LivreUtilisateur> livreprete = interfaceLivreEnLigne.getLivrePrete();
