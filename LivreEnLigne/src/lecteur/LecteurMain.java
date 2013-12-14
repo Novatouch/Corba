@@ -35,7 +35,7 @@ public class LecteurMain {
 		CorbaLivreEnLigne corbaManager = new CorbaLivreEnLigne(args);
 
 		Bibliotheque bibliotheque = new Bibliotheque();
-		
+
 		Debug.afficherLog("info","testLecteur : crÃ©ation InterfaceLivreEnLigne");
 
 		// crÃ©ation servant Lecteur 
@@ -73,26 +73,22 @@ public class LecteurMain {
 
 	private static void makeChoise (InterfaceLivreEnLigne interfaceLivreEnLigne, Bibliotheque bibliotheque ) {
 		Scanner sc = new Scanner(System.in);
-		
+
 		String value;
 
 		System.out.println("\nQue souhaitez vous faire ?\n1 - Accéder à ma bibliothèque\n2 - Acheter un livre\n3 - Prêter un livre\n4 - Annuler un prêt");
 		value = sc.nextLine();
 		switch (value) {
 		case "1":
-			System.out.println("lectureLivre(bibliotheque)");
 			lectureLivre (interfaceLivreEnLigne, bibliotheque);
 			break;
 		case "2":
-			System.out.println("achatLivre(interfaceLivreEnLigne)");
 			achatLivre(interfaceLivreEnLigne);
 			break;
 		case "3":
-			System.out.println("pretLivre()");
 			pretLivre(interfaceLivreEnLigne);
 			break;
 		case "4":
-			System.out.println("annulerPret()");
 			annulerPret(interfaceLivreEnLigne);
 			break;
 		default:
@@ -199,7 +195,7 @@ public class LecteurMain {
 
 
 	private static void achatLivre (InterfaceLivreEnLigne interfaceLivreEnLigne) {
-		
+
 		Scanner sc = new Scanner(System.in);
 
 		InfoRecherche resultat;
@@ -287,35 +283,40 @@ public class LecteurMain {
 			System.out.println(i + "]\t" + li.getTitre() + "\t\t\t de : " + li.getAuteur());
 			i++;
 		}
-		
-		System.out.println("\nChoisir le livre que vous voulez preter : ");
 
-		String value = sc.nextLine();
+		if (i==1){
+			System.out.println("Vous n'avez aucun livres");
 
-		try {
-			Integer nombre = Integer.parseInt(value);
+		}else{
 
-			if (nombre > 0 || nombre < i){
+			System.out.println("\nChoisir le livre que vous voulez preter : ");
 
-				System.out.println("\nA qui voulez vous preter ce livre : ");
-				String utilisateur = sc.nextLine();
-				
-				try {
-					interfaceLivreEnLigne.preterLivre(livreAchete.get(nombre-1), utilisateur);
-				} catch (ExceptionPretNotAllowed e) {
-					System.out.println("Le pret a echoue");
+			String value = sc.nextLine();
+
+			try {
+				Integer nombre = Integer.parseInt(value);
+
+				if (nombre > 0 || nombre < i){
+
+					System.out.println("\nA qui voulez vous preter ce livre : ");
+					String utilisateur = sc.nextLine();
+
+					try {
+						interfaceLivreEnLigne.preterLivre(livreAchete.get(nombre-1), utilisateur);
+					} catch (ExceptionPretNotAllowed e) {
+						System.out.println("Le pret a echoue");
+					}
+
 				}
-				
-			}
-			else {
-				System.out.println("Le livre que vous avez choisir n'est pas dans la liste");
-			}
+				else {
+					System.out.println("Le livre que vous avez choisir n'est pas dans la liste");
+				}
 
-		} catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 
-			System.out.println("Saisie invalide");
+				System.out.println("Saisie invalide");
+			}
 		}
-
 
 	}
 
@@ -337,30 +338,37 @@ public class LecteurMain {
 			System.out.println(i + "]\t" + li.getTitre() + "\t\t\t de : " + li.getAuteur());
 			i++;
 		}
-		
-		System.out.println("\nChoisir le livre que vous voulez récuperer : ");
 
-		String value = sc.nextLine();
+		if (i==1){
+			System.out.println("Vous n'avez aucun livres");
 
-		try {
-			Integer nombre = Integer.parseInt(value);
+		}else{
 
-			if (nombre > 0 || nombre < i){
-				
-				try {
-					interfaceLivreEnLigne.annulerPreterLivre(livreprete.get(nombre-1));
-				} catch (ExceptionPretNotDeleted e) {
-					System.out.println("La supression du pret a échoué");
+			System.out.println("\nChoisir le livre que vous voulez récuperer : ");
+
+			String value = sc.nextLine();
+
+			try {
+				Integer nombre = Integer.parseInt(value);
+
+				if (nombre > 0 || nombre < i){
+
+					try {
+						interfaceLivreEnLigne.annulerPreterLivre(livreprete.get(nombre-1));
+					} catch (ExceptionPretNotDeleted e) {
+						System.out.println("La supression du pret a échoué");
+					}
+
 				}
-				
-			}
-			else {
-				System.out.println("Le livre que vous avez choisir n'est pas dans la liste");
+				else {
+					System.out.println("Le livre que vous avez choisir n'est pas dans la liste");
+				}
+
+			} catch (NumberFormatException e) {
+
+				System.out.println("Saisie invalide");
 			}
 
-		} catch (NumberFormatException e) {
-
-			System.out.println("Saisie invalide");
 		}
 
 	}
