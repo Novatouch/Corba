@@ -85,7 +85,7 @@ public class InterfaceLivreEnLigne {
 	
 	public InfoRecherche rechercherLivre(String pTitre, String pAuteur) throws ExceptionNoLivreFound{
 	
-		InfoRecherche resultat = iorMandataire.rechercherLivre("titre1", "auteur1");
+		InfoRecherche resultat = iorMandataire.rechercherLivre(pTitre, pAuteur);
 					
 		return resultat;
 	}
