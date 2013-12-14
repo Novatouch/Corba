@@ -35,13 +35,11 @@ public class LecteurMain {
 		CorbaLivreEnLigne corbaManager = new CorbaLivreEnLigne(args);
 
 		Bibliotheque bibliotheque = new Bibliotheque();
-		Bibliotheque bibliothequePret = new Bibliotheque();
-
+		
 		Debug.afficherLog("info","testLecteur : crÃ©ation InterfaceLivreEnLigne");
 
 		// crÃ©ation servant Lecteur 
-		ServantLecteur servantLecteur = new ServantLecteur(nomLecteur, bibliotheque, bibliothequePret);
-
+		ServantLecteur servantLecteur = new ServantLecteur(nomLecteur, bibliotheque);
 		// DÃ©claration servant Lecteur
 
 		Debug.afficherLog("info","testLecteur : Enregistrement du servant auprÃ¨s du naming service");
@@ -55,7 +53,7 @@ public class LecteurMain {
 
 		Lecteur iorLecteur = corbaManager.resolveObjetLecteur(nomLecteur);
 
-		InterfaceLivreEnLigne interfaceLivreEnLigne = new InterfaceLivreEnLigne(corbaManager, bibliotheque, bibliothequePret, "mandataire", nomLecteur, "controleur");
+		InterfaceLivreEnLigne interfaceLivreEnLigne = new InterfaceLivreEnLigne(corbaManager, bibliotheque, "mandataire", nomLecteur, "controleur");
 
 		// Demarrer corbaWorker
 		Debug.afficherLog("info","testLecteur : DÃ©mmarage Corba Worker");
@@ -68,12 +66,12 @@ public class LecteurMain {
 
 
 		while (true) {
-			makeChoise(interfaceLivreEnLigne, bibliotheque, bibliothequePret);
+			makeChoise(interfaceLivreEnLigne, bibliotheque);
 		}
 
 	}
 
-	private static void makeChoise (InterfaceLivreEnLigne interfaceLivreEnLigne, Bibliotheque bibliotheque, Bibliotheque bibliothequePret ) {
+	private static void makeChoise (InterfaceLivreEnLigne interfaceLivreEnLigne, Bibliotheque bibliotheque ) {
 		Scanner sc = new Scanner(System.in);
 		
 		String value;
@@ -83,7 +81,7 @@ public class LecteurMain {
 		switch (value) {
 		case "1":
 			System.out.println("lectureLivre(bibliotheque)");
-			lectureLivre (interfaceLivreEnLigne, bibliotheque, bibliothequePret);
+			lectureLivre (interfaceLivreEnLigne, bibliotheque);
 			break;
 		case "2":
 			System.out.println("achatLivre(interfaceLivreEnLigne)");
@@ -104,7 +102,7 @@ public class LecteurMain {
 
 	}
 
-	private static void lectureLivre (InterfaceLivreEnLigne interfaceLivreEnLigne, Bibliotheque bibliotheque, Bibliotheque bibliothequePret) {
+	private static void lectureLivre (InterfaceLivreEnLigne interfaceLivreEnLigne, Bibliotheque bibliotheque) {
 		Scanner sc = new Scanner(System.in);
 
 		String value;

@@ -13,14 +13,12 @@ public class ServantLecteur extends LecteurPOA {
 
 	private String nomLecteur = null;
 	private Bibliotheque bibliotheque = null;
-	private Bibliotheque bibliothequePret = null;
 	
 	
-	public ServantLecteur(String nomLecteur, Bibliotheque pBibliotheque, Bibliotheque pBibliothequePret) {
+	public ServantLecteur(String nomLecteur, Bibliotheque pBibliotheque) {
 		super();
 		this.nomLecteur = nomLecteur;
 		this.bibliotheque = pBibliotheque;
-		this.bibliothequePret = pBibliothequePret;
 	}
 
 	@Override
@@ -55,7 +53,7 @@ public class ServantLecteur extends LecteurPOA {
 		
 		// retrouver livre
 		try {
-			LivreUtilisateurPret livre = bibliothequePret.rechercherLivrePret(pTitre, pAuteur, pNomProprietaire);
+			LivreUtilisateurPret livre = bibliotheque.rechercherLivrePret(pTitre, pAuteur, pNomProprietaire);
 			
 			livre.setCle(pLivre.cle);
 			livre.setContenu(pLivre.contenu);
@@ -112,7 +110,7 @@ public class ServantLecteur extends LecteurPOA {
 		
 		LivreUtilisateurPret livre = new LivreUtilisateurPret(pAuteur, pTitre, contenu, cle, pNomFournisseur, pIorFournisseur,  pNomProprietaire);
 		livre.setEstTelecharger(true);
-		bibliothequePret.ajouterLivrePret(livre);
+		bibliotheque.ajouterLivrePret(livre);
 	}
 
 	@Override
@@ -121,7 +119,7 @@ public class ServantLecteur extends LecteurPOA {
 		Debug.afficherLog("info","ServantLecteur > retirerPret: reception suppresion enregistrement : " + pTitre + pAuteur + pNomProprietaire);
 		
 		try {
-			bibliothequePret.supprimerPret(pTitre, pAuteur, pNomProprietaire);
+			bibliotheque.supprimerPret(pTitre, pAuteur, pNomProprietaire);
 			Debug.afficherLog("info","ServantLecteur > retirerPret: pret retiré");
 		} catch (ExceptionNoLivreFound e) {
 			Debug.afficherLog("error","ServantLecteur > retirerPret: suppresion pret echoue");

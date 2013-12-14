@@ -25,7 +25,6 @@ public class InterfaceLivreEnLigne {
 	Lecteur iorLecteur;
 	Controleur iorControleur;
 	Bibliotheque bibliotheque;
-	Bibliotheque bibliothequePret;
 	
 	
 	
@@ -51,7 +50,7 @@ public class InterfaceLivreEnLigne {
      *               
 	 */
 	
-	public InterfaceLivreEnLigne(CorbaLivreEnLigne pCorbaManager, Bibliotheque pBibliotheque, Bibliotheque bibliothequePret,
+	public InterfaceLivreEnLigne(CorbaLivreEnLigne pCorbaManager, Bibliotheque pBibliotheque,
 			String pNomMandataire, String pNomLecteur, String pNomControleur){
 		
 		corbaManager = pCorbaManager;
@@ -61,7 +60,6 @@ public class InterfaceLivreEnLigne {
 		iorControleur = corbaManager.resolveObjetControleur(pNomControleur);
 		iorLecteur = corbaManager.resolveObjetLecteur(pNomLecteur);
 		bibliotheque = pBibliotheque;
-		bibliothequePret = bibliothequePret;
 		nomLecteur = pNomLecteur;
 	}
 	
