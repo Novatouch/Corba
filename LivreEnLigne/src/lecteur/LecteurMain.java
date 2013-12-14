@@ -8,6 +8,8 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 import LivreEnLigne.ExceptionAuthorizationFailed;
 import LivreEnLigne.ExceptionEchecCommande;
 import LivreEnLigne.ExceptionNoLivreFound;
+import LivreEnLigne.ExceptionPretNotAllowed;
+import LivreEnLigne.ExceptionPretNotDeleted;
 import LivreEnLigne.InfoRecherche;
 import LivreEnLigne.Lecteur;
 
@@ -21,10 +23,9 @@ public class LecteurMain {
 	/**
 	 * @param args
 	 */
-	private static Scanner sc = new Scanner(System.in);
 
-	public static void main(String[] args) throws ExceptionAuthorizationFailed, ExceptionPretEstTropOld, ExceptionLivreIsEnCoursPret {
-
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
 
 		//Saisie du nom d utilisateur
 		System.out.println("\nVotre nom?");
@@ -72,8 +73,9 @@ public class LecteurMain {
 
 	}
 
-	private static void makeChoise (InterfaceLivreEnLigne interfaceLivreEnLigne, Bibliotheque bibliotheque, Bibliotheque bibliothequePret ) throws ExceptionAuthorizationFailed, ExceptionPretEstTropOld, ExceptionLivreIsEnCoursPret {
-
+	private void makeChoise (InterfaceLivreEnLigne interfaceLivreEnLigne, Bibliotheque bibliotheque, Bibliotheque bibliothequePret ) {
+		Scanner sc = new Scanner(System.in);
+		
 		String value;
 
 		System.out.println("\nQue souhaitez vous faire ?\n1 - Accéder à ma bibliothèque\n2 - Acheter un livre\n3 - Prêter un livre\n4 - Annuler un prêt");
@@ -89,9 +91,11 @@ public class LecteurMain {
 			break;
 		case "3":
 			System.out.println("pretLivre()");
+			pretLivre(interfaceLivreEnLigne);
 			break;
 		case "4":
 			System.out.println("annulerPret()");
+			annulerPret(interfaceLivreEnLigne);
 			break;
 		default:
 			System.out.println("Merci de choisir une option proposée dans le menu");
@@ -100,8 +104,8 @@ public class LecteurMain {
 
 	}
 
-	private static void lectureLivre (InterfaceLivreEnLigne interfaceLivreEnLigne, Bibliotheque bibliotheque, Bibliotheque bibliothequePret) throws ExceptionAuthorizationFailed, ExceptionPretEstTropOld, ExceptionLivreIsEnCoursPret {
-
+	private static void lectureLivre (InterfaceLivreEnLigne interfaceLivreEnLigne, Bibliotheque bibliotheque, Bibliotheque bibliothequePret) {
+		Scanner sc = new Scanner(System.in);
 
 		String contenu;
 		String value;
@@ -169,10 +173,17 @@ public class LecteurMain {
 
 
 					try {
-						System.out.println(interfaceLivreEnLigne.LireLivre(livre));
+						try {
+							System.out.println(interfaceLivreEnLigne.LireLivre(livre));
+						} catch (ExceptionAuthorizationFailed e) {
+							System.out.println("La verification aupres du controleur a echoue");
+						} catch (ExceptionPretEstTropOld e) {
+							System.out.println("Le pret a expriré");
+						} catch (ExceptionLivreIsEnCoursPret e) {
+							System.out.println("Le livre est en cour de pret");	
+						}
 					} catch (ExceptionLivreNotTelecharge e) {
 						System.out.println("Le livre n'a pas encore Ã©tÃ© tÃ©lÃ©chargÃ© auprÃ¨s du fournisseur");
-						e.printStackTrace();
 					}
 
 				}
@@ -190,7 +201,9 @@ public class LecteurMain {
 	}
 
 
-	private static void achatLivre (InterfaceLivreEnLigne interfaceLivreEnLigne) {
+	private void achatLivre (InterfaceLivreEnLigne interfaceLivreEnLigne) {
+		
+		Scanner sc = new Scanner(System.in);
 
 		InfoRecherche resultat;
 		String auteur;
@@ -233,8 +246,9 @@ public class LecteurMain {
 
 	}
 
-	private static void commande( String ptitre, String pauteur, InfoRecherche resultat, InterfaceLivreEnLigne interfaceLivreEnLigne) {
+	private void commande( String ptitre, String pauteur, InfoRecherche resultat, InterfaceLivreEnLigne interfaceLivreEnLigne) {
 		try {
+			Scanner sc = new Scanner(System.in);
 
 			String compte;
 			String code;
@@ -258,13 +272,100 @@ public class LecteurMain {
 	}
 
 
-	private void pretLivre () {		
+	private void pretLivre (InterfaceLivreEnLigne interfaceLivreEnLigne) {
+		Scanner sc = new Scanner(System.in);
+		//récuperation des listes de livres
+		ArrayList<LivreUtilisateur> livreAchete = interfaceLivreEnLigne.getLivreAchette();
+
+		//creation des iterators
+		java.util.Iterator<LivreUtilisateur> itachete = livreAchete.iterator();
+
+
+		int i = 1;
+
+		System.out.println("\nListe des livres que vous possedez : \n");
+		while (itachete.hasNext()) {
+
+			LivreUtilisateur li = itachete.next();
+			System.out.println(i + "]\t" + li.getTitre() + "\t\t\t de : " + li.getAuteur());
+			i++;
+		}
+		
+		System.out.println("\nChoisir le livre que vous voulez preter : ");
+
+		String value = sc.nextLine();
+
+		try {
+			Integer nombre = Integer.parseInt(value);
+
+			if (nombre > 0 || nombre < i){
+
+				System.out.println("\nA qui voulez vous preter ce livre : ");
+				String utilisateur = sc.nextLine();
+				
+				try {
+					interfaceLivreEnLigne.preterLivre(livreAchete.get(nombre-1), utilisateur);
+				} catch (ExceptionPretNotAllowed e) {
+					System.out.println("Le pret a echoue");
+				}
+				
+			}
+			else {
+				System.out.println("Le livre que vous avez choisir n'est pas dans la liste");
+			}
+
+		} catch (NumberFormatException e) {
+
+			System.out.println("Saisie invalide");
+		}
+
 
 	}
 
-	private void annulerPret () {
+	private void annulerPret (InterfaceLivreEnLigne interfaceLivreEnLigne) {
+		Scanner sc = new Scanner(System.in);
+		//récuperation des listes de livres
+		ArrayList<LivreUtilisateur> livreprete = interfaceLivreEnLigne.getLivrePrete();
+
+		//creation des iterators
+		java.util.Iterator<LivreUtilisateur> itachete = livreprete.iterator();
+
+
+		int i = 1;
+
+		System.out.println("\nListe des livres que vous possedez : \n");
+		while (itachete.hasNext()) {
+
+			LivreUtilisateur li = itachete.next();
+			System.out.println(i + "]\t" + li.getTitre() + "\t\t\t de : " + li.getAuteur());
+			i++;
+		}
+		
+		System.out.println("\nChoisir le livre que vous voulez récuperer : ");
+
+		String value = sc.nextLine();
+
+		try {
+			Integer nombre = Integer.parseInt(value);
+
+			if (nombre > 0 || nombre < i){
+				
+				try {
+					interfaceLivreEnLigne.annulerPreterLivre(livreprete.get(nombre-1));
+				} catch (ExceptionPretNotDeleted e) {
+					System.out.println("La supression du pret a échoué");
+				}
+				
+			}
+			else {
+				System.out.println("Le livre que vous avez choisir n'est pas dans la liste");
+			}
+
+		} catch (NumberFormatException e) {
+
+			System.out.println("Saisie invalide");
+		}
 
 	}
 
 }
-
