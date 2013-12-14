@@ -257,8 +257,6 @@ public class InterfaceLivreEnLigne {
      * @return     ArrayList<LivreUtilisateur>
      * 			             
      * 
-     * @throws ExceptionPretNotDeleted
-     * 			le prêt n'a pas été supprimé
      * 			           
 	 */
 	
@@ -269,19 +267,31 @@ public class InterfaceLivreEnLigne {
 	
 	
 	/**
-	 * fonction permettant de récupérer les livres prètés
+	 * fonction permettant de récupérer les livres empruntés
 	 * 
 	 * 
      * @return     ArrayList<LivreUtilisateurPret>
      * 			             
      * 
-     * @throws ExceptionPretNotDeleted
-     * 			le prêt n'a pas été supprimé
      * 			           
 	 */
 	
 	public ArrayList<LivreUtilisateurPret> getLivreEmprunte(){
 		
 		return bibliotheque.getLivreEmprunte();
+	}
+	
+	/**
+	 * fonction permettant de récupérer les livres prètés à d'autres utilisateurs
+	 * 
+	 * 
+     * @return     ArrayList<LivreUtilisateur>
+     * 			             
+     * 			           
+	 */
+	
+	public ArrayList<LivreUtilisateur> getLivrePrete(){
+		
+		return bibliotheque.getLivrePrete();
 	}
 }

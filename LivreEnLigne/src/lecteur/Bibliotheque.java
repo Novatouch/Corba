@@ -69,8 +69,30 @@ public class Bibliotheque {
     	    // Recup commande
     	    LivreUtilisateur livre = listeLivre.get(key);
     	    
-    	    // test titre et auteur
-    	    liste.add(livre);
+    	    // test si le livre est emprunté
+    	    if(livre.getEstPrete() == false){
+    	    	liste.add(livre);
+    	    }
+    	}
+    	
+		return liste;
+	}
+	
+	public ArrayList<LivreUtilisateur> getLivrePrete(){
+    	ArrayList<LivreUtilisateur> liste = new ArrayList<LivreUtilisateur>();
+    	
+    	// parcours de la liste des commandes
+    	java.util.Iterator<String> myVeryOwnIterator = listeLivre.keySet().iterator();
+    	while(myVeryOwnIterator.hasNext()) {
+    	    String key=(String)myVeryOwnIterator.next();
+    	    
+    	    // Recup commande
+    	    LivreUtilisateur livre = listeLivre.get(key);
+    	    
+    	    // test si le livre est emprunté
+    	    if(livre.getEstPrete() == true){
+    	    	liste.add(livre);
+    	    }
     	}
     	
 		return liste;
