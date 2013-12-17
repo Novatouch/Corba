@@ -87,7 +87,7 @@ public class Telechargement {
 	
 	private short genererCle(){
 		
-		Random rand = new Random(Short.MAX_VALUE);
+		Random rand = new Random();
 		return (short) rand.nextInt(Short.MAX_VALUE);
 	}
 
