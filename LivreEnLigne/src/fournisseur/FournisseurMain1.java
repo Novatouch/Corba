@@ -28,9 +28,9 @@ public class FournisseurMain1 {
 		
 		// remplissage du catalogue
 		LivreCatalogue livre1 = new LivreCatalogue("Cédric Teyssié", "J'ai testé la QOS sur ma femme", "1er conseil -> ne jamais essayer", (float) 3.0, true);
-		LivreCatalogue livre2 = new LivreCatalogue("Patrice Torguet", "Le Corba pour les nuls et les petits cons", "demerdez-vous !", (float) 10.0, true);
+		LivreCatalogue livre2 = new LivreCatalogue("Patrice Torguet", "Le Corba pour les nuls", "Visiter mon site perso", (float) 10.0, true);
 		LivreCatalogue livre3 = new LivreCatalogue("auteur1", "titre1", "contenu1", (float) 10.0, true);
-		LivreCatalogue livre4 = new LivreCatalogue("auteur2", "titre2", "contenu2", (float) 10.0, true);
+		LivreCatalogue livre4 = new LivreCatalogue("auteur2", "titre2", "contenu2", (float) 20.0, true);
 		
 		Debug.afficherLog("info","ajout des Livres au catalogue");
 		
